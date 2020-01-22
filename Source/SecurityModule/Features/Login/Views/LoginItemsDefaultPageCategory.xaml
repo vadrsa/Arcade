@@ -1,0 +1,19 @@
+﻿<dxr:RibbonDefaultPageCategory x:Class="SecurityModule.Features.Login.Views.LoginItemsDefaultPageCategory"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" 
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" 
+             xmlns:inf="clr-namespace:Infrastructure;assembly=Infrastructure.Wpf" 
+             xmlns:kernel="clr-namespace:Kernel;assembly=Kernel" 
+             xmlns:const="clr-namespace:SecurityModule.Constants" 
+             xmlns:local="clr-namespace:SecurityModule.Views"
+             Caption="Test"
+             mc:Ignorable="d" >
+    <dxr:RibbonPage Caption="Home">
+        <dxr:RibbonPageGroup Caption="Main">
+            <dxb:BarButtonItem MergeOrder="1" Content="Login" kernel:CommandManager.CommandName="{x:Static const:SecurityCommands.Login}"></dxb:BarButtonItem>
+        </dxr:RibbonPageGroup>
+    </dxr:RibbonPage>
+</dxr:RibbonDefaultPageCategory>
