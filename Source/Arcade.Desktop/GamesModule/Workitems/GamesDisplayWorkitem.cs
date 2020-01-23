@@ -19,7 +19,7 @@ namespace GamesModule.Workitems
         protected override void RegisterViews(IViewContainer container)
         {
             base.RegisterViews(container);
-            container.Register(new UserControl(), KnownRegions.Content);
+            container.Register(new UserControl() { Content = "adsasd"}, KnownRegions.Content);
         }
     }
 }
