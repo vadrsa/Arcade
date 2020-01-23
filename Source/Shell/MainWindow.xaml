@@ -28,9 +28,8 @@
                     </dxdo:LayoutPanel>
                 </dxdo:LayoutGroup>
             </dxdo:DockLayoutManager>
-            <ContentControl Padding="0" Grid.Column="1" DockPanel.Dock="Bottom" kernel:RegionManager.RegionName="{x:Static const:KnownRegions.Content}"/>
-            <!--<dx:DXTabControl Padding="0" Grid.Column="1" DockPanel.Dock="Bottom" kernel:RegionManager.RegionName="{x:Static const:KnownRegions.Content}" >
-            </dx:DXTabControl>-->
+            <dx:DXTabControl Padding="0" Grid.Column="1" DockPanel.Dock="Bottom" kernel:RegionManager.RegionName="{x:Static const:KnownRegions.Content}" >
+            </dx:DXTabControl>
         </Grid>
     </DockPanel>
 </dx:ThemedWindow>

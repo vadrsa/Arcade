@@ -1,4 +1,6 @@
-﻿using GamesModule.Workitems;
+﻿using GamesModule.Views;
+using GamesModule.Workitems;
+using Infrastructure.Constants;
 using Infrastructure.Prism;
 using Prism.Ioc;
 
@@ -10,6 +12,7 @@ namespace Modules
         {
             base.OnInitialized(containerProvider);
             CurrentContextService.LaunchWorkItem<GamesDisplayWorkitem>();
+            //RegionManager.AddToRegion(KnownRegions.MainMenu, new NavBarItem());
         }
     }
 }
