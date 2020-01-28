@@ -7,9 +7,9 @@ namespace Kernel.Configuration
     /// </summary>
     public interface IOptionConfiguration
     {
-        void Configure<T>(T option);
+        OptionConfiguration Configure<T>(T option);
 
-        void Configure<T>(Action<T> init);
+        OptionConfiguration Configure<T>(Action<T> init);
 
         /// <summary>
         /// Get the option of type T

@@ -262,7 +262,7 @@ namespace Kernel.Workitems.Strategies.Launch
             var metadata = ModalMetadata;
             if (metadata == null)
                 metadata = Workitem.Configuration.GetOption<ModalOptions>();
-            global::Prism.Regions.RegionManager.SetRegionManager((DependencyObject)popup, global::Prism.Regions.RegionManager.GetRegionManager(Application.Current.MainWindow));
+            global::Prism.Regions.RegionManager.SetRegionManager(popup.GetRegionHolder(), global::Prism.Regions.RegionManager.GetRegionManager(Application.Current.MainWindow));
             global::Prism.Regions.RegionManager.UpdateRegions();
             popup.WindowStartupLocation = metadata.WindowStartupLocation;
             if (!metadata.Size.IsEmpty)
@@ -285,7 +285,7 @@ namespace Kernel.Workitems.Strategies.Launch
                 return;
             }
 
-            global::Prism.Regions.RegionManager.SetRegionManager((DependencyObject)workitem.Window, null);
+            global::Prism.Regions.RegionManager.SetRegionManager(workitem.Window.GetRegionHolder(), null);
             global::Prism.Regions.RegionManager.UpdateRegions();
         }
     }

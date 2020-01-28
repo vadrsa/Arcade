@@ -1,11 +1,17 @@
 ﻿using AutoMapper;
+using AutoMapper.EquivalencyExpression;
+using BusinessEntities;
 using Common.Configuration;
 using Common.Core;
 using Common.Enums;
+using Common.Faults;
 using Common.Filters;
 using Common.Localization;
+using Common.Middleware;
 using Common.ResponseHandling;
 using Common.Services;
+using DataAccess;
+using DataAccess.Middleware;
 using Facade.Configuration;
 using Facade.Managers;
 using FluentValidation.AspNetCore;
@@ -14,7 +20,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -23,6 +31,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 
 namespace CoreAPI
@@ -39,6 +48,13 @@ namespace CoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ArcadeContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("arcade")), ServiceLifetime.Scoped);
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<ArcadeContext>()
+                .AddDefaultTokenProviders();
+
             #region Authentication Configuration
 
             // Configure Jwt Security
@@ -84,7 +100,6 @@ namespace CoreAPI
             }));
             services.AddRouting(options => options.LowercaseUrls = true);
 
-            services.AddHttpContextAccessor();
             services.AddMvc(opt =>
             {
                 // Set up entity fluid validation
@@ -103,41 +118,25 @@ namespace CoreAPI
                 .AddFluentValidation();
             services.AddResponseCaching();
             services.AddMemoryCache();
-
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".iSmartBar.Session";
                 options.IdleTimeout = TimeSpan.FromSeconds(60);
                 options.Cookie.IsEssential = true;
             });
-
-            Mapper.Initialize(cfg => cfg.AddProfiles(typeof(ProfileLocator).Assembly));
+            //var mapperConfiguration =  new MapperConfiguration(conf => conf.AddMaps(Assembly.GetAssembly(typeof(ProfileLocator))));
+            //services.AddSingleton<AutoMapper.IConfigurationProvider>(mapperConfiguration);
+            //services.AddSingleton<IMapper>(mapperConfiguration.CreateMapper());
             services.AddOptions();
             IConfigurationSection globalOptionsSection = Configuration.GetSection("GlobalOptions");
 
-            GlobalOptions globalOptions = globalOptionsSection.Get<GlobalOptions>();
-            services.Configure<GlobalOptions>(globalOptionsSection);
-            // Configure Response Options
-            services.Configure<ResponseOptions>(options =>
+            services.AddAutoMapper((serviceProvider, automapper) =>
             {
-                options.Dictionary = new LocalizationDictionary<object, ApiResponse>();
-                options.Dictionary.Add(
-                    "en",
-                    new Dictionary<object, ApiResponse>
-                    {
-                        [FaultCode.InvalidInput] = new FaultResponse(HttpStatusCode.BadRequest, "Invalid data"),
-                        [FaultCode.InvalidID] = new FaultResponse(HttpStatusCode.BadRequest, "Invalid ID"),
-                        [FaultCode.InvalidLimit] = new FaultResponse(HttpStatusCode.BadRequest, "Invalid Limit"),
-                        [FaultCode.InvalidPage] = new FaultResponse(HttpStatusCode.BadRequest, "Invalid Page"),
-                        [FaultCode.InvalidUserCredentials] = new FaultResponse(HttpStatusCode.BadRequest, "Invalid Credentials"),
-                        [FaultCode.NotAllCulturesProvided] = new FaultResponse(HttpStatusCode.BadRequest, "Data must be provided in all supported languages."),
-                    }
-                );
-            });
-            services.AddSingleton<ResponseProvider>();
-            services.AddSingleton<CurrencyProvider>();
-            services.AddNotifications();
-            services.AddSignalR();
+                automapper.AddCollectionMappers();
+                automapper.UseEntityFrameworkCoreModel<ArcadeContext>(serviceProvider);
+            }, typeof(ProfileLocator).Assembly);
+
+            GlobalOptions globalOptions = globalOptionsSection.Get<GlobalOptions>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<ServiceProvider>(services.BuildServiceProvider());
 
@@ -148,15 +147,18 @@ namespace CoreAPI
             services.AddTransient<IAuthenticationManager, Managers.Implementation.AuthenticationManager>();
             services.AddTransient<IUserRolesManager, UserRolesManager>();
             services.AddTransient<IImageManager, ImageManager>();
+            services.AddTransient<IAssetManager, AssetManager>();
+            services.AddTransient<IGameManager, GameManager>();
+            services.AddTransient<IFaultManager, FaultManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
             app.UseStaticFiles();
             app.UseResponseCaching();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
-            //app.UseSimulatedLatency(TimeSpan.FromMilliseconds(2000), TimeSpan.FromMilliseconds(6000));
 
             if (env.IsDevelopment())
             {
@@ -167,11 +169,13 @@ namespace CoreAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseErrorHandling();
             app.UseSession();
             app.UseRequestLocalization();
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseHttpContext();
+            app.UseMiddleware<ContextManagementMiddleware>();
+            //app.UseSimulatedLatency(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5));
             app.UseMvc();
         }
     }

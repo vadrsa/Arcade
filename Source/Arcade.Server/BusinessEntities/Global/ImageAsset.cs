@@ -17,6 +17,7 @@ namespace BusinessEntities
 
         protected override byte[] ProcessContent(byte[] content)
         {
+            if (content == null) return null;
             return ImageHelper.ResizeImage(content, ResizedImageHeight);
         }
 

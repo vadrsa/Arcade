@@ -1,4 +1,4 @@
-﻿using DevExpress.Mvvm;
+﻿using Infrastructure.Mvvm;
 using System;
 using System.Threading.Tasks;
 

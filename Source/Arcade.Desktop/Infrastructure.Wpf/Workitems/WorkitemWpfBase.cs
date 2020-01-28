@@ -1,4 +1,5 @@
-﻿using Infrastructure.Constants;
+﻿using AutoMapper;
+using Infrastructure.Constants;
 using Infrastructure.Mvvm;
 using Kernel.Workitems;
 using Prism.Ioc;
@@ -10,8 +11,13 @@ namespace Infrastructure.Workitems
 {
     public abstract class WorkitemWpfBase : WorkitemBase
     {
+        private IMapper _mapper;
+
+        public IMapper Mapper => _mapper;
+
         public WorkitemWpfBase(IContainerExtension container) : base(container)
         {
+            _mapper = container.Resolve<IMapper>();
         }
 
         protected override void RegisterCommands(ICommandContainer container)
@@ -23,20 +29,18 @@ namespace Infrastructure.Workitems
         protected override IViewContainer CreateViewContainer()
         {
             IViewContainer container = base.CreateViewContainer();
-            Disposable(container.WhenRegisteringView.Subscribe(ContainerWhenRegisteringView));
+            //Disposable(container.WhenRegisteringView.Subscribe(ContainerWhenRegisteringView));
             return container;
         }
 
-        private void ContainerWhenRegisteringView(object view)
-        {
+        //private void ContainerWhenRegisteringView(object view)
+        //{
 
-            if (view is FrameworkElement)
-            {
-                object viewModel = ((FrameworkElement)view).DataContext;
+        //    if (view is FrameworkElement)
+        //    {
+        //        object viewModel = ((FrameworkElement)view).DataContext;
 
-                if (view is IGridView && viewModel is IGridViewModel)
-                    ((IGridViewModel)viewModel).Grid = ((IGridView)view).Grid;
-            }
-        }
+        //    }
+        //}
     }
 }

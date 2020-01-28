@@ -7,19 +7,21 @@ namespace Kernel.Configuration
     {
         Dictionary<Type, Object> Options = new Dictionary<Type, Object>();
 
-        public void Configure<T>(T option)
+        public OptionConfiguration Configure<T>(T option)
         {
             Options[typeof(T)] = option;
+            return this;
         }
 
-        public void Configure<T>(Action<T> init)
+        public OptionConfiguration Configure<T>(Action<T> init)
         {
             T option = Activator.CreateInstance<T>();
             init(option);
             Configure(option);
+            return this;
         }
 
-        protected bool IsConfigured<T>()
+        public bool IsConfigured<T>()
         {
             return Options.ContainsKey(typeof(T));
         }

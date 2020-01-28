@@ -31,21 +31,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AsyncAwaitBestPractices, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncAwaitBestPractices.4.0.1\lib\netstandard1.0\AsyncAwaitBestPractices.dll</HintPath>
+    </Reference>
+    <Reference Include="AsyncAwaitBestPractices.MVVM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncAwaitBestPractices.MVVM.4.0.1\lib\netstandard1.0\AsyncAwaitBestPractices.MVVM.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Mvvm.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Core.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Grid.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Grid.v19.2.Core, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.LayoutControl.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.PrismAdapters.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Ribbon.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="Flurl, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Flurl.2.8.2\lib\net40\Flurl.dll</HintPath>
     </Reference>
     <Reference Include="Flurl.Http, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Flurl.Http.2.4.2\lib\net46\Flurl.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -83,7 +94,7 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Wpf.7.2.0.1422\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -104,56 +115,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ApiConnectionException.cs" />
-    <Compile Include="Api\ApiError.cs" />
-    <Compile Include="Api\ApiException.cs" />
-    <Compile Include="Api\ApiExceptionHandlingAttribute.cs" />
+    <Compile Include="Api\ApiExceptionHandling.cs" />
+    <Compile Include="Api\ConnectionFailedFault.cs" />
     <Compile Include="Api\RestConsumingServiceBase.cs" />
+    <Compile Include="Api\UnexpectedFault.cs" />
     <Compile Include="Constants\Commands.cs" />
     <Compile Include="Constants\KnownCommands.cs" />
     <Compile Include="Constants\KnownRegions.cs" />
+    <Compile Include="Mvvm\AsyncCommand.cs" />
     <Compile Include="Mvvm\BaseViewModel.cs" />
+    <Compile Include="Mvvm\BooleanToVisibilityConverter.cs" />
     <Compile Include="Mvvm\CommitSuccessAction.cs" />
     <Compile Include="Mvvm\CrudManagerViewModel.cs" />
     <Compile Include="Mvvm\EditableViewModel.cs" />
     <Compile Include="Mvvm\EditModeBooleanConverter.cs" />
     <Compile Include="Mvvm\EnumStringConverter.cs" />
-    <Compile Include="Mvvm\GridColumnAttribute.cs" />
+    <Compile Include="Mvvm\ExpressionHelper.cs" />
+    <Compile Include="Mvvm\FilteredObservableCollection.cs" />
     <Compile Include="Mvvm\IDataErrorInfoExtended.cs" />
-    <Compile Include="Mvvm\IGridView.cs" />
-    <Compile Include="Mvvm\IGridViewModel.cs" />
+    <Compile Include="Mvvm\IDataErrorInfoHelper.cs" />
     <Compile Include="Mvvm\IIdEntityViewModel.cs" />
     <Compile Include="Mvvm\InverseBooleanConverter.cs" />
     <Compile Include="Mvvm\ObjectVisibilityConverter.cs" />
     <Compile Include="Mvvm\ObjectWidthConverter.cs" />
-    <Compile Include="ObjectManagment\IObjectManagementService.cs" />
-    <Compile Include="ObjectManagment\ObjectManagerViewModel.cs" />
-    <Compile Include="ObjectManagment\ObjectManagerWorkitem.cs" />
+    <Compile Include="Prism\ItemsControlRegionAdapterExtended.cs" />
+    <Compile Include="Prism\PanelHostRegionAdapter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\BarLinkHolder.cs" />
-    <Compile Include="Resources\DataPageGroup.xaml.cs">
-      <DependentUpon>DataPageGroup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\ImportRibbonPageGroup.xaml.cs">
-      <DependentUpon>ImportRibbonPageGroup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\ObjectManagerActionsPageGroup.xaml.cs">
-      <DependentUpon>ObjectManagerActionsPageGroup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\ObjectManagerActionsToolbarLinks.xaml.cs">
-      <DependentUpon>ObjectManagerActionsToolbarLinks.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\ObjectManagerMainPageGroup.xaml.cs">
-      <DependentUpon>ObjectManagerMainPageGroup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\QARibbonPageCategory.xaml.cs">
-      <DependentUpon>QARibbonPageCategory.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\QCActionsRibbonPageGroup.xaml.cs">
-      <DependentUpon>QCActionsRibbonPageGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Security\AnonymousIdentity.cs" />
     <Compile Include="Security\AppIdentity.cs" />
@@ -163,65 +153,23 @@
     <Compile Include="Security\SecurityContext.cs" />
     <Compile Include="ChangeTracking\EditMode.cs" />
     <Compile Include="ChangeTracking\Memento.cs" />
-    <Compile Include="Utils\ApiHelper.cs" />
     <Compile Include="Utils\DataErrorInfoExtenisons.cs" />
+    <Compile Include="Utils\FileHelper.cs" />
+    <Compile Include="Utils\ImageHelper.cs" />
     <Compile Include="Utils\INotifyPropertyChangedExtensions.cs" />
     <Compile Include="Utils\PrismHelper.cs" />
     <Compile Include="Mvvm\ISupportsListManipulation.cs" />
-    <Compile Include="Mvvm\WorkitemGridViewModel.cs" />
     <Compile Include="Mvvm\WorkitemViewModel.cs" />
     <Compile Include="Workitems\WorkitemWpfBase.cs" />
-    <Compile Include="WPF\DataProperties.cs" />
-    <Compile Include="WPF\GridProperties.cs" />
-    <Compile Include="WPF\ReadOnlyPanel.cs" />
-    <Compile Include="WPF\VisibilityManager.cs" />
-    <Compile Include="Prism\DXTabControlRegionTransformation.cs" />
     <Compile Include="Prism\Module.cs" />
-    <Compile Include="Prism\RibbonControlRegionAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WPF\CustomImageExtension.cs" />
-    <Compile Include="Resources\WorkitemClosePageGroup.xaml.cs">
-      <DependentUpon>WorkitemClosePageGroup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\WorkitemRibbonPageCategory.cs" />
+    <Compile Include="WPF\IHasVisibility.cs" />
+    <Compile Include="WPF\PanelProperties.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Resources\DataPageGroup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\ImportRibbonPageGroup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\ObjectManagerActionsPageGroup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\ObjectManagerActionsToolbarLinks.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\ObjectManagerMainPageGroup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\QARibbonPageCategory.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\QCActionsRibbonPageGroup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\WorkitemClosePageGroup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -266,6 +214,10 @@
     <None Include="Resources\Icons\table_export_excel_32.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\SharedEntities\SharedEntities.csproj">
+      <Project>{516F8439-92F3-45D6-A3FA-2845E360048A}</Project>
+      <Name>SharedEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kernel\Kernel.csproj">
       <Project>{d6e5cc87-1879-41f6-b95b-5cf8b64ea721}</Project>
       <Name>Kernel</Name>

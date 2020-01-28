@@ -1,4 +1,4 @@
-﻿using DevExpress.Mvvm;
+﻿using Prism.Commands;
 using System;
 
 namespace Infrastructure.Security
@@ -8,12 +8,12 @@ namespace Infrastructure.Security
     /// </summary>
     public class SecureCommand : DelegateCommand, IDisposable
     {
-        public SecureCommand(Action executeMethod, bool? useCommandManager = null) : base(executeMethod, SecureCanExecute, useCommandManager)
+        public SecureCommand(Action executeMethod) : base(executeMethod, SecureCanExecute)
         {
             AppSecurityContext.AppPrincipalChanged += HandleAppPrincipalChanged;
         }
 
-        public SecureCommand(Action executeMethod, Func<bool> canExecuteMethod, bool? useCommandManager = null) : base(executeMethod, () => canExecuteMethod() && SecureCanExecute(), useCommandManager)
+        public SecureCommand(Action executeMethod, Func<bool> canExecuteMethod) : base(executeMethod, () => canExecuteMethod() && SecureCanExecute())
         {
             AppSecurityContext.AppPrincipalChanged += HandleAppPrincipalChanged;
         }
@@ -26,7 +26,6 @@ namespace Infrastructure.Security
 
         private static bool SecureCanExecute()
         {
-            return true;
             return AppSecurityContext.CurrentPrincipal.Identity.IsAuthenticated;
         }
 

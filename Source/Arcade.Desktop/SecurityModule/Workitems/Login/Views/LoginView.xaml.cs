@@ -10,7 +10,17 @@ namespace SecurityModule.Workitems.Login.Views
         public LoginView()
         {
             InitializeComponent();
+            OnDataContextChanged();
+            DataContextChanged += (o,e) => OnDataContextChanged();
+            password.Password = "_Maruse2010";
         }
 
+        private void OnDataContextChanged()
+        {
+            if(DataContext != null && DataContext is LoginViewModel)
+            {
+                ((LoginViewModel)DataContext).PasswordBox = password;
+            }
+        }
     }
 }

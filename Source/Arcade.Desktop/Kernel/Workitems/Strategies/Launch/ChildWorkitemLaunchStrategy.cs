@@ -27,8 +27,8 @@ namespace Kernel.Workitems.Strategies.Launch
             // Set parent
             Workitem.Parent = Parent;
             // if should open modal set window owner to pernt.window or mainwindow
-            if (ShouldOpenModal)
-                Application.Current.Dispatcher.InvokeIfNeeded(() => ((Window)Workitem.Window).Owner = ((Window)Parent.Window) ?? Application.Current.MainWindow);
+            if (ShouldOpenModal && Workitem.Window is Window)
+                Application.Current.Dispatcher.InvokeIfNeeded(() => ((Window)Workitem.Window).Owner = (Parent.Window as Window) ?? Application.Current.MainWindow);
 
             await RunWorkitem().ConfigureAwait(false);
 

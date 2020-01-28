@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Prism;
 using Prism.Ioc;
-using SecurityModule.Workitems.Test;
 
 namespace Modules
 {

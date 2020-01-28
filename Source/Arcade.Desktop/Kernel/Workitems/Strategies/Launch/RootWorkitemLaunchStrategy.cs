@@ -24,7 +24,12 @@ namespace Kernel.Workitems.Strategies.Launch
             Type type = Workitem.GetType();
             // if should open modal set the window owner to MainWindow
             if (ShouldOpenModal)
-                Application.Current.Dispatcher.InvokeIfNeeded(() => ((Window)Workitem.Window).Owner = Application.Current.MainWindow);
+            {
+                if(Workitem.Window is Window)
+                {
+                    Application.Current.Dispatcher.InvokeIfNeeded(() => ((Window)Workitem.Window).Owner = Application.Current.MainWindow);
+                }
+            }
 
             await RunWorkitem().ConfigureAwait(false);
 

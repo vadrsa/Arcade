@@ -13,6 +13,7 @@ namespace BusinessEntities
         public Asset(byte[] content)
         {
             SetContent(content);
+            Path = "images/" + Guid.NewGuid().ToString() + ".jpg";
         }
 
         public Asset(byte[] content, string path): this(content)

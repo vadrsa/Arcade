@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="GamesModule.Workitems.AddEditGame.Views.EditGameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:kernel="clr-namespace:Kernel;assembly=Kernel" 
+             xmlns:const="clr-namespace:GamesModule.Workitems.AddEditGame.Constants" 
+             xmlns:controls="clr-namespace:Arcade.CustomControls;assembly=Arcade.CustomControls" 
+             xmlns:mvvm="clr-namespace:Infrastructure.Mvvm;assembly=Infrastructure.Wpf" 
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:local="clr-namespace:GamesModule.Workitems.GameManager.Views"
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <mvvm:BooleanToVisibilityConverter x:Key="booleabVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="1" 
+                   Width="250" TextAlignment="Center" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Foreground="Red" 
+                   Visibility="{Binding IsLoadingFaulted, Converter={StaticResource booleabVisibilityConverter}}" 
+                   Text="{Binding LoadingErrorMessage}" TextWrapping="Wrap" />
+        <StackPanel Grid.Row="3" Margin="50 0 50 30">
+            <Image Source="{Binding Game.ImagePath}" Width="250" MinHeight="100">
+            </Image>
+            <Button Margin="0 -40 -150 0" kernel:CommandManager.CommandName="{x:Static const:Commands.BrowseImage}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}">Browse</Button>
+            <Label Margin="0 10 0 0" Content="Name" Width="250"/>
+            <TextBox Text="{Binding Game.Name}"/>
+
+            <Label Margin="0 10 0 0" Content="Category" Width="250"/>
+            <TextBox Text="{Binding Game.Category}"/>
+            
+            <Label Margin="0 10 0 0" Content="Age Limit" Width="250"/>
+            <TextBox Text="{Binding Game.AgeLimit}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 30 20">
+            <Button Width="100"  Style="{DynamicResource MaterialDesignFlatButton}" kernel:CommandManager.CommandName="{x:Static const:Commands.SaveGame}" Content="Save" />
+            <Button Width="80"  Style="{DynamicResource MaterialDesignToolButton}" HorizontalAlignment="Right" Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Cancel" />
+        </StackPanel>
+    </Grid>
+</UserControl>

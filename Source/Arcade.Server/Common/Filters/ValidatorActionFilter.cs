@@ -1,6 +1,6 @@
-﻿using Common.ResponseHandling;
-using Microsoft.AspNetCore.Mvc;
+﻿using Common.Faults;
 using Microsoft.AspNetCore.Mvc.Filters;
+using SharedEntities;
 
 namespace Common.Filters
 {
@@ -9,9 +9,7 @@ namespace Common.Filters
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!filterContext.ModelState.IsValid)
-            {
-                throw new ApiException(Enums.FaultCode.InvalidInput);
-            }
+                throw new FaultException(FaultType.BadRequest, "test");
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext)

@@ -1,5 +1,7 @@
 ﻿using Common.Enums;
+using Common.Faults;
 using Common.ResponseHandling;
+using SharedEntities;
 
 namespace Common.Validation
 {
@@ -8,7 +10,7 @@ namespace Common.Validation
         public static void AssurePage(int page)
         {
             if (page < 1)
-                throw new ApiException(FaultCode.InvalidPage);
+                throw new FaultException(FaultType.BadRequest);
         }
     }
 }

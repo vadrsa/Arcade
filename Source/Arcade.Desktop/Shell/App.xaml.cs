@@ -1,7 +1,6 @@
 ﻿using Arcade;
-using DevExpress.Xpf.Core;
-using DevExpress.Xpf.NavBar;
-using DevExpress.Xpf.Ribbon;
+using Arcade.Configuration;
+using AutoMapper;
 using Infrastructure.Constants;
 using Infrastructure.Prism;
 using Infrastructure.Utility;
@@ -11,8 +10,9 @@ using Kernel.Workitems;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
-using System.Linq;
+using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Shell
 {
@@ -44,22 +44,19 @@ namespace Shell
             moduleCatalog.AddModule<Modules.GamesModule>();
         }
 
-        protected override void ConfigureRegionTransformations(RegionTransformationCollection collection)
-        {
-            base.ConfigureRegionTransformations(collection);
-            collection.Register<DXTabControlRegionTransformation>();
-        }
-
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings mappings)
         {
             base.ConfigureRegionAdapterMappings(mappings);
             var factory = Container.Resolve<IRegionBehaviorFactory>();
+            mappings.RegisterMapping(typeof(WrapPanel), new PanelHostRegionAdapter<WrapPanel>(factory));
+        }
 
-            mappings.RegisterMapping(typeof(DXTabControl),
-                DevExpress.Xpf.Prism.AdapterFactory.Make<RegionAdapterBase<DXTabControl>>(factory));
-            mappings.RegisterMapping(typeof(NavBarControl),
-                DevExpress.Xpf.Prism.AdapterFactory.Make<RegionAdapterBase<NavBarControl>>(factory));
-
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            base.RegisterTypes(containerRegistry);
+            var configuration = new MapperConfiguration(cfg => cfg.AddMaps(Assembly.GetAssembly(typeof(GamesProfile))));
+            configuration.AssertConfigurationIsValid();
+            containerRegistry.RegisterInstance<IMapper>(configuration.CreateMapper());
         }
 
         protected override void ConfigureViewModelLocator()

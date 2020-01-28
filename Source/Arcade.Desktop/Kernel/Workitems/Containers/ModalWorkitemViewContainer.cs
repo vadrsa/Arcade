@@ -12,7 +12,7 @@ namespace Kernel.Workitems
 
         internal ModalWorkitemViewContainer(IWorkItem workItem, IRegionManagerExtension regionManager, IContainerExtension container) : base(workItem, regionManager, container)
         {
-            RegionNames = DynamicRegionManager.GetDynamicRegionNames((Window)WorkItem.Window);
+            RegionNames = DynamicRegionManager.GetDynamicRegionNames(WorkItem.Window.GetRegionHolder());
         }
 
         protected override void UnregisterView(object view, string region)

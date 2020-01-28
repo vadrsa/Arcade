@@ -1,8 +1,11 @@
 ﻿using Common.Enums;
 using Common.ResponseHandling;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using SharedEntities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,11 +17,20 @@ namespace Common.Core
 {
     public static class HttpContextExtensions
     {
-        public static Task WriteErrorDataAsync(this HttpContext context, string message, CancellationToken token = default(CancellationToken))
+        private static IHttpContextAccessor m_httpContextAccessor;
+
+        public static HttpContext Current => m_httpContextAccessor.HttpContext;
+
+        public static string AppBaseUrl => $"{Current.Request.Scheme}://{Current.Request.Host}";
+
+        internal static void Configure(IHttpContextAccessor contextAccessor)
         {
-            string traceId = context.TraceIdentifier;
-            int status = context.Response.StatusCode;
-            return context.Response.WriteAsync(JsonConvert.SerializeObject(new { message, traceId, status }), token);
+            m_httpContextAccessor = contextAccessor;
+        }
+
+        public static Task WriteErrorDataAsync(this HttpContext context, FaultResponse response, CancellationToken token = default(CancellationToken))
+        {
+            return context.Response.WriteAsync(JsonConvert.SerializeObject(response), token);
         }
 
         public static CultureInfo GetCulture(this HttpContext context)
@@ -28,5 +40,17 @@ namespace Common.Core
             CultureInfo culture = rqf.RequestCulture.Culture;
             return culture;
         }
+
+        public static void AddHttpContextAccessor(this IServiceCollection services)
+        {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        }
+
+        public static IApplicationBuilder UseHttpContext(this IApplicationBuilder app)
+        {
+            HttpContextExtensions.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
+            return app;
+        }
+
     }
 }

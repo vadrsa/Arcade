@@ -10,11 +10,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Kernel.Managers;
+using Kernel.Configuration;
+using System.Collections.Generic;
 
 namespace Kernel.Workitems
 {
     public class ContextService : IContextService
     {
+
+        private Project Project { get; set; }
 
         private IContainerExtension Container { get; set; }
 
@@ -24,21 +28,17 @@ namespace Kernel.Workitems
 
         internal IRegionManagerExtension RegionManager { get; set; }
 
-        public ContextService(IRegionManagerExtension regionManager, IContainerExtension container, ITaskManager taskManager, IUIManager uiManager)
+        public ContextService(IRegionManagerExtension regionManager, IContainerExtension container, ITaskManager taskManager, IUIManager uiManager, Project project)
         {
             Container = container;
             RegionManager = regionManager;
             TaskManager = taskManager;
             UIManager = uiManager;
             Collection = new WorkitemCollection();
-            //FocusCommand.AllowMultipleExecution = true;
-            //CommandManager.RegisterCommand(CommandNames.FocusWorkitem, FocusCommand);
-            //CommandManager.RegisterCommand(CommandNames.CloseAllTabs, new AsyncCommand(CloseAllTabs));
+            Project = project;
         }
 
-        //private AsyncCommand<IWorkItem> focusCommand;
-        //public AsyncCommand<IWorkItem> FocusCommand =>
-        //    focusCommand ?? (focusCommand = new AsyncCommand<IWorkItem>(FocusWorkitem));
+        public IReadOnlyCollection<IWorkItem> Workitems => Collection;
 
         internal WorkitemCollection Collection;
 
@@ -111,6 +111,13 @@ namespace Kernel.Workitems
 
         async Task<IObservable<WorkitemEventArgs>> LaunchWorkItem(Type type, IWorkItem parent, object data, bool isModal, ModalOptions metadata = null)
         {
+            if (Project.IsConfigured<WorkitemBehaviorOptions>())
+            {
+                WorkitemBehaviorOptions options = Project.GetOption<WorkitemBehaviorOptions>();
+                if (!await options.Behaviour.OnLaunching(this, new Behaviors.WorkitemLaunchDescriptor(type, parent == null, isModal)))
+                    return null;
+                
+            }
             if (!typeof(IWorkItem).IsAssignableFrom(type))
                 throw new ArgumentException("Workitem to be launched must be of type IWorkItem");
             IWorkItem workitem = (IWorkItem)Container.Resolve(type);
@@ -119,13 +126,20 @@ namespace Kernel.Workitems
                 return await strategy.LaunchModal(metadata).ConfigureAwait(false);
             else
                 return await strategy.Launch().ConfigureAwait(false);
-
         }
 
         internal async Task ForceCloseWorkitem(IWorkItem workitem)
         {
+            CloseChildren(workitem);
             await WorkitemCloseStrategy.GetCloseStrategy(this, workitem).Close().ConfigureAwait(false);
         }
+
+        public async void CloseChildren(IWorkItem workitem)
+        {
+            foreach (var w in Workitems.Where(w => w.Parent == workitem).ToList())
+                await ForceCloseWorkitem(w);
+        }
+
 
         public async Task<bool> CloseWorkitem(IWorkItem workitem)
         {

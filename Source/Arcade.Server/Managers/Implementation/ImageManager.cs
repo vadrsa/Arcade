@@ -1,6 +1,6 @@
 ﻿using BusinessEntities;
+using DataAccess;
 using Facade.Managers;
-using Facade.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -9,42 +9,45 @@ using System.Threading.Tasks;
 
 namespace Managers.Implementation
 {
-    public class ImageManager : IImageManager
+    public class ImageManager : ManagerBase<ArcadeContext> ,IImageManager
     {
-        private IServiceProvider serviceProvider;
-
-        public ImageManager(IServiceProvider provider)
+        public ImageManager(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            serviceProvider = provider;
         }
 
-        public async Task<Image> InsertBytesAsync(byte[] image, CancellationToken token = new CancellationToken())
+        public async Task<Image> InsertBytesAsync(byte[] bytes, CancellationToken token = new CancellationToken())
         {
-            throw new NotImplementedException();
-            //string path = await serviceProvider.GetService<IAssetRepository>()
-            //    .InsertAsync(new ImageAsset(image), token);
-            //return await serviceProvider.GetService<IImageRepository>()
-            //    .InsertAsync(new Image() { Path = path }, token);
+            string path = await ServiceProvider.GetService<IAssetManager>()
+                .InsertAsync(new ImageAsset(bytes), token);
+            Image image = new Image { Path = path };
+            await Context.Images.AddAsync(image, token);
+            return image;
         }
 
 
         public async Task<Image> UpdateBytesAsync(byte[] bytes, string path, CancellationToken token = new CancellationToken())
         {
-            throw new NotImplementedException();
-            //Image image = (await serviceProvider.GetService<IImageRepository>()
-            //    .FindAsync(i => i.Path == path)).First();
-            //path = await serviceProvider.GetService<IAssetRepository>()
-            //    .UpdateAsync(new ImageAsset(bytes, path), token);
-            //return image;
+            if (String.IsNullOrEmpty(path)) return await InsertBytesAsync(bytes, token);
+            else
+            {
+                ServiceProvider.GetService<IAssetManager>().Remove(path);
+                var newPath = await ServiceProvider.GetService<IAssetManager>()
+                    .InsertAsync(new ImageAsset(bytes), token);
+                Image image = Context.Images.Where(i => i.Path == path).Single();
+                image.Path = newPath;
+                Context.Update(image);
+                return image;
+            }
         }
 
         public async Task RemoveAsync(Image image, CancellationToken token = default(CancellationToken))
         {
-            throw new NotImplementedException();
-            //Image original = await serviceProvider.GetService<IImageRepository>().FindByIDAsync(image.ID);
-            //int id = await serviceProvider.GetService<IImageRepository>().RemoveAsync(original, token);
-            //if (id != 0)
-            //    serviceProvider.GetService<IAssetRepository>().Remove(original.Path);
+            Image original = await Context.Images.FindAsync(image.Id);
+            if (original != null)
+            {
+                Context.Images.Remove(original);
+                ServiceProvider.GetService<IAssetManager>().Remove(original.Path);
+            }
         }
     }
 }

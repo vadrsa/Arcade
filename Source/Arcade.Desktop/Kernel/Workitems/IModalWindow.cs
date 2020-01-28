@@ -40,5 +40,11 @@ namespace Kernel.Workitems
         /// </summary>
         void Close();
 
+        /// <summary>
+        /// Get the underlying region holder
+        /// </summary>
+        /// <returns></returns>
+        DependencyObject GetRegionHolder();
+
     }
 }

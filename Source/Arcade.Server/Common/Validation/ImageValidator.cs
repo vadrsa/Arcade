@@ -1,5 +1,5 @@
-﻿using Common.Enums;
-using Common.ResponseHandling;
+﻿using Common.Faults;
+using SharedEntities;
 
 namespace Common.Validation
 {
@@ -8,7 +8,7 @@ namespace Common.Validation
         public static void AssureNonEmpty(byte[] image)
         {
             if (image == null || image.Length == 0)
-                throw new ApiException(FaultCode.EmptyImageFault);
+                throw new FaultException(FaultType.ImageNotProvided);
         }
     }
 }

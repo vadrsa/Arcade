@@ -1,11 +1,13 @@
 ﻿using BusinessEntities;
 using Common.Core;
 using Common.Enums;
+using Common.Faults;
 using Common.ResponseHandling;
 using Facade.Managers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SharedEntities;
 using SharedEntities.Users;
 using System;
 using System.Collections.Generic;
@@ -45,16 +47,14 @@ namespace Managers.Implementation
                 List<string> roles = (await _userManager.GetRolesAsync(appUser)).ToList();
                 return new UserDto { UserName = appUser.UserName, Token = GenerateJwtToken(appUser, roles).ToString(), Roles = roles };
             }
-            throw new ApiException(FaultCode.InvalidUserCredentials);
+            throw new FaultException(FaultType.InvalidCredentials);
         }
-
 
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
         }
 
-        [Transaction]
         public async Task<UserDto> RegisterAsync(RegisterDto model)
         {
             var user = new User
@@ -69,7 +69,7 @@ namespace Managers.Implementation
                 return new UserDto { UserName = user.UserName, Token = GenerateJwtToken(user, (await _userManager.GetRolesAsync(user)).ToList()).ToString() };
             }
 
-            throw new ApiException(FaultCode.InvalidInput);
+            throw new FaultException(FaultType.InvalidUserRegisteration);
         }
 
         private object GenerateJwtToken(User user, List<string> roles)
@@ -80,7 +80,6 @@ namespace Managers.Implementation
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
-
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token");
             claimsIdentity.AddClaims(roles.Select(role => new Claim(ClaimTypes.Role, role)));

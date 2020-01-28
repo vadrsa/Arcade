@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arcade", "Arcade\Arcade.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesModule", "GamesModule\GamesModule.csproj", "{B15BD6A5-2D8F-4CC8-9953-42FD2B86D3C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedEntities", "..\Shared\SharedEntities\SharedEntities.csproj", "{516F8439-92F3-45D6-A3FA-2845E360048A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arcade.CustomControls", "Arcade.CustomControls\Arcade.CustomControls.csproj", "{4079F1AC-D833-428E-9E90-59E5EA440E9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{B15BD6A5-2D8F-4CC8-9953-42FD2B86D3C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B15BD6A5-2D8F-4CC8-9953-42FD2B86D3C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B15BD6A5-2D8F-4CC8-9953-42FD2B86D3C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516F8439-92F3-45D6-A3FA-2845E360048A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516F8439-92F3-45D6-A3FA-2845E360048A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516F8439-92F3-45D6-A3FA-2845E360048A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516F8439-92F3-45D6-A3FA-2845E360048A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4079F1AC-D833-428E-9E90-59E5EA440E9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4079F1AC-D833-428E-9E90-59E5EA440E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4079F1AC-D833-428E-9E90-59E5EA440E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4079F1AC-D833-428E-9E90-59E5EA440E9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

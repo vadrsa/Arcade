@@ -98,6 +98,7 @@
     <Compile Include="Configuration\OptionConfiguration.cs" />
     <Compile Include="Configuration\Project.cs" />
     <Compile Include="Configuration\RegionOptions.cs" />
+    <Compile Include="Configuration\WorkitemBehaviorOptions.cs" />
     <Compile Include="Configuration\WorkitemOptions.cs" />
     <Compile Include="ISupportsFocus.cs" />
     <Compile Include="ISupportsInitialization.cs" />
@@ -120,6 +121,9 @@
     <Compile Include="Utility\UIExtensions.cs" />
     <Compile Include="Utility\UIHelper.cs" />
     <Compile Include="Workitems\Attributes\SingleInstanceWorkitemAttribute.cs" />
+    <Compile Include="Workitems\Behaviors\IWorkitemBehaviour.cs" />
+    <Compile Include="Workitems\Behaviors\WorkitemBehaviourCollection.cs" />
+    <Compile Include="Workitems\Behaviors\WorkitemLaunchDescriptor.cs" />
     <Compile Include="Workitems\Containers\ICommandContainer.cs" />
     <Compile Include="Workitems\Containers\IDisposableContainer.cs" />
     <Compile Include="Workitems\Containers\IViewContainer.cs" />

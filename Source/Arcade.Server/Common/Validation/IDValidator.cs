@@ -1,5 +1,5 @@
-﻿using Common.ResponseHandling;
-using System.ComponentModel.DataAnnotations;
+﻿using Common.Faults;
+using SharedEntities;
 
 namespace Common.Validation
 {
@@ -8,13 +8,13 @@ namespace Common.Validation
         public static void AssureID(int id)
         {
             if (id < 1)
-                throw new ApiException(Enums.FaultCode.InvalidID);
+                throw new FaultException(FaultType.BadRequest);
         }
 
         public static void AssureEmpty(int id)
         {
             if (id >= 1)
-                throw new ApiException(Enums.FaultCode.NonEmptyID);
+                throw new FaultException(FaultType.BadRequest);
         }
     }
 }

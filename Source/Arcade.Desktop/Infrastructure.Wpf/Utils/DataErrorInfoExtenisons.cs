@@ -1,4 +1,4 @@
-﻿using DevExpress.Mvvm;
+﻿using Infrastructure.Mvvm;
 using System.ComponentModel;
 
 namespace Infrastructure.Utility

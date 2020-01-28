@@ -21,12 +21,10 @@ namespace Kernel
 
         private static void OnDynamicRegionNamesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is Window)
-                UpdateRegionNames(d, (Window)d);
-
+            UpdateRegionNames(d, d);
         }
 
-        private static void UpdateRegionNames(DependencyObject d, Window window)
+        private static void UpdateRegionNames(DependencyObject d, DependencyObject regionHolder)
         {
 
             foreach (DependencyObject child in LogicalTreeHelper.GetChildren(d).OfType<DependencyObject>())
@@ -34,17 +32,15 @@ namespace Kernel
                 string region = DynamicRegionManager.GetScreenRegion(child);
                 if (region != null)
                 {
-                    UpdateRegionName(child, region, window);
+                    UpdateRegionName(child, region, GetRegionNamesRecursive(regionHolder));
                 }
                 else
-                    UpdateRegionNames(child, window);
+                    UpdateRegionNames(child, regionHolder);
             }
         }
 
-        private static void UpdateRegionName(DependencyObject d, string region, Window window)
+        private static void UpdateRegionName(DependencyObject d, string region, DynamicRegionNames dynamicRegionNames)
         {
-
-            DynamicRegionNames dynamicRegionNames = DynamicRegionManager.GetDynamicRegionNames(window);
             if (dynamicRegionNames != null)
                 Kernel.RegionManager.SetRegionName(d, dynamicRegionNames.GetName(region));
         }
@@ -64,21 +60,10 @@ namespace Kernel
 
         private static void OnScreenRegionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Window window = GetParentWindow(d);
-            if (window != null)
-            {
-                UpdateRegionName(d, (string)e.NewValue, window);
-            }
+            UpdateRegionName(d, (string)e.NewValue, GetRegionNamesRecursive(d));
         }
 
-        /// <summary>
-        /// Gets the parent window of a dependency object.
-        /// TODO: Check implementation
-        /// http://www.viblend.com/forum/d_postst154_Find-the-parent-Window-of-a-WPF-control.aspx
-        /// </summary>
-        /// <param name="child"></param>
-        /// <returns></returns>
-        private static Window GetParentWindow(DependencyObject child)
+        private static DynamicRegionNames GetRegionNamesRecursive(DependencyObject child)
         {
             DependencyObject parentObject = LogicalTreeHelper.GetParent(child);
 
@@ -86,15 +71,14 @@ namespace Kernel
             {
                 return null;
             }
-
-            Window parent = parentObject as Window;
-            if (parent != null)
+            var regionNames = DynamicRegionManager.GetDynamicRegionNames(parentObject);
+            if (regionNames != null)
             {
-                return parent;
+                return regionNames;
             }
             else
             {
-                return GetParentWindow(parentObject);
+                return GetRegionNamesRecursive(parentObject);
             }
         }
     }

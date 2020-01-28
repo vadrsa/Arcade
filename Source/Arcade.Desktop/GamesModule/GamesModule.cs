@@ -1,6 +1,15 @@
-﻿using GamesModule.Workitems;
+﻿using GamesModule.Views;
+using GamesModule.Workitems;
+using GamesModule.Workitems.GameManager;
+using GamesModule.Workitems.GamesDisplay;
+using Infrastructure.Constants;
+using Infrastructure.Mvvm;
 using Infrastructure.Prism;
+using Infrastructure.Security;
+using Kernel;
 using Prism.Ioc;
+using System;
+using System.Threading.Tasks;
 
 namespace Modules
 {
@@ -9,7 +18,22 @@ namespace Modules
         public override void OnInitialized(IContainerProvider containerProvider)
         {
             base.OnInitialized(containerProvider);
-            CurrentContextService.LaunchWorkItem<GamesDisplayWorkitem>();
+            // hadck to create referance
+            new Arcade.CustomControls.FaultedPage();
+            RegionManager.AddToRegion(KnownRegions.MainMenu, new GamesDisplayButton());
+            RegionManager.AddToRegion(KnownRegions.MainMenu, new GameManagerButton());
+            CommandManager.RegisterCommand(global::GamesModule.Constants.Commands.OpenGamesWorkitem, new AsyncCommand(OpenGamesWorkitem));
+            CommandManager.RegisterCommand(global::GamesModule.Constants.Commands.OpenGameManagerWorkitem, new SecureAsyncCommand(OpenGameManagerWorkietm));
+        }
+
+        private async Task OpenGamesWorkitem()
+        {
+            await CurrentContextService.LaunchWorkItem<GamesDisplayWorkitem>();
+        }
+
+        private async Task OpenGameManagerWorkietm()
+        {
+            await CurrentContextService.LaunchWorkItem<GameManagerWorkitem>();
         }
     }
 }

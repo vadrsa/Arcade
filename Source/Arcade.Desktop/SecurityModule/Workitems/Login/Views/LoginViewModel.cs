@@ -1,16 +1,18 @@
-﻿using DevExpress.Mvvm;
+﻿using Flurl.Http;
 using Infrastructure.Api;
 using Infrastructure.Mvvm;
+using Infrastructure.Security;
+using SharedEntities;
+using SharedEntities.Users;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace SecurityModule.Workitems.Login.Views
 {
     public class LoginViewModel : WorkitemViewModel
     {
-        CancellationTokenSource cancellationToken;
-
 
         public LoginViewModel()
         {
@@ -21,77 +23,70 @@ namespace SecurityModule.Workitems.Login.Views
         public string ErrorText
         {
             get { return errorText; }
-            set { SetProperty(ref errorText, value, nameof(ErrorText)); }
+            set { Set(ref errorText, value, nameof(ErrorText)); }
         }
 
-
-        private string username = "";
+        private string username = "vadrsa";
 
         public string Username
         {
             get { return username; }
-            set { SetProperty(ref username, value, nameof(Username)); }
+            set { Set(ref username, value, nameof(Username)); }
         }
 
-
-        private string password = "";
-
-        public string Password
+        public PasswordBox PasswordBox
         {
-            get { return password; }
-            set { SetProperty(ref password, value, nameof(Password)); }
+            get;
+            set;
         }
 
         private AsyncCommand loginCommand;
         public AsyncCommand LoginCommand =>
-            loginCommand ?? (loginCommand = new AsyncCommand(ExecuteLoginCommand, CanExecuteLoginCommand));
+            loginCommand ?? (loginCommand = new AsyncCommand(ExecuteLoginCommand));
 
-        bool IsLoginCommandExecuting;
 
         async Task ExecuteLoginCommand()
         {
-            IsLoginCommandExecuting = true;
-            LoginCommand?.RaiseCanExecuteChanged();
-            try
-            {
-                cancellationToken?.Cancel();
-                cancellationToken = new CancellationTokenSource();
-                await ((LoginWorkitem)Workitem).AuthenticationService.AuthenticateAsync(Username, Password, cancellationToken.Token);
-                await Workitem.Close();
-            }
-            catch (ApiException apiEx)
-            {
-                //Logger.LogErrorSource("Error while logging in", apiEx);
-                ErrorText = apiEx.Message;
-            }
+            //IsLoginCommandExecuting = true;
+            //LoginCommand?.RaiseCanExecuteChanged();
+            //try
+            //{
+            //    cancellationToken?.Cancel();
+            //    cancellationToken = new CancellationTokenSource();
+            await LoadCustom(DoExecuteLoginCommand);
+            //}
+            //catch (FlurlHttpException ex)
+            //{
+            //    if(ex.Call.Response == null)
+            //    {
+            //        ErrorText = "Couldn't connect to server";
+            //    }
+            //    else
+            //    {
+            //        FaultResponse response = await ex.GetResponseJsonAsync<FaultResponse>();
+            //        if (response == null)
+            //            ErrorText = "An unkown error occured, please contact your administrator.";
+            //        else
+            //            ErrorText = response.Message;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    ErrorText = "An unkown error occured, please contact your administrator.";
+            //}
+            //finally
+            //{
+            //    IsLoginCommandExecuting = false;
+            //    LoginCommand?.RaiseCanExecuteChanged();
 
-            catch (ApiConnectionException)
-            {
-                //Logger.LogErrorSource("Error while logging in | Couldn't connect to server");
-                ErrorText = "Couldn't connect to server";
-            }
-            catch (Exception e)
-            {
-                //Logger.LogErrorSource("Unknown error while logging in", e);
-                ErrorText = "An unkown error occured, please contact your administrator.";
-            }
-            finally
-            {
-                IsLoginCommandExecuting = false;
-                LoginCommand?.RaiseCanExecuteChanged();
-
-            }
+            //}
         }
 
-        bool CanExecuteLoginCommand()
+        private async Task DoExecuteLoginCommand(CancellationToken token)
         {
-            return !IsLoginCommandExecuting;
+            await ((LoginWorkitem)Workitem).AuthenticationService.AuthenticateAsync(Username, PasswordBox?.Password, token);
+            await Workitem.Close();
         }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-            cancellationToken?.Cancel();
-        }
     }
 }

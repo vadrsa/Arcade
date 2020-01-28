@@ -1,13 +1,15 @@
-﻿using DevExpress.Xpf.Core;
-using Kernel.Managers;
+﻿using Kernel.Managers;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.ComponentModel;
+using System.Windows;
 
 namespace Shell
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : ThemedWindow
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
