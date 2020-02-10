@@ -9,6 +9,17 @@ namespace Infrastructure.Mvvm
 {
     public class FilteredObservableCollection<T> : ObservableCollection<T>
     {
+
+        public FilteredObservableCollection() : base()
+        {
+
+        }
+
+        public FilteredObservableCollection(List<T> list) : base(list)
+        {
+
+        }
+
         private List<T> removedList = new List<T>();
 
         public void Filter(Func<T, bool> predicate)

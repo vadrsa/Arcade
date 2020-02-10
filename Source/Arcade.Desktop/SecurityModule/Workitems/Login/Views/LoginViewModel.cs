@@ -5,13 +5,15 @@ using Infrastructure.Security;
 using SharedEntities;
 using SharedEntities.Users;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace SecurityModule.Workitems.Login.Views
 {
-    public class LoginViewModel : WorkitemViewModel
+    class LoginViewModel : WorkitemViewModel<LoginWorkitem>
     {
 
         public LoginViewModel()
@@ -81,6 +83,14 @@ namespace SecurityModule.Workitems.Login.Views
 
             //}
         }
+
+        //protected override string GetFaultMessage(FaultResponse response)
+        //{
+        //    if(response.Descriptor != null && response.Descriptor is IEnumerable<string>)
+        //        return ((IEnumerable<string>)response.Descriptor).Aggregate("", (str, err) => str += err + '\n');
+
+        //    return null;
+        //}
 
         private async Task DoExecuteLoginCommand(CancellationToken token)
         {

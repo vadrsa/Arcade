@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kernel", "..\Arcade.Desktop\Kernel\Kernel.csproj", "{D6E5CC87-1879-41F6-B95B-5CF8B64EA721}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shell", "Shell\Shell.csproj", "{514082E4-A6A9-44AA-8290-627190838FDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityModule", "SecurityModule\SecurityModule.csproj", "{0A7FCBA4-6809-47A0-99D8-899346442361}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Wpf", "Infrastructure.Wpf\Infrastructure.Wpf.csproj", "{B38EFC08-A392-45CC-AB7B-59CB5AD2C7C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arcade.Management", "Arcade.Management\Arcade.Management.csproj", "{64F8C4D5-D504-4D9B-9EB5-1EF4E56B5E61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arcade.StaffModule", "Arcade.StaffModule\Arcade.StaffModule.csproj", "{3D40A47C-D089-4F1A-96BD-359B647E845D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedEntities", "..\Shared\SharedEntities\SharedEntities.csproj", "{516F8439-92F3-45D6-A3FA-2845E360048A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6E5CC87-1879-41F6-B95B-5CF8B64EA721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E5CC87-1879-41F6-B95B-5CF8B64EA721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E5CC87-1879-41F6-B95B-5CF8B64EA721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E5CC87-1879-41F6-B95B-5CF8B64EA721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{514082E4-A6A9-44AA-8290-627190838FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{514082E4-A6A9-44AA-8290-627190838FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{514082E4-A6A9-44AA-8290-627190838FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{514082E4-A6A9-44AA-8290-627190838FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A7FCBA4-6809-47A0-99D8-899346442361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7FCBA4-6809-47A0-99D8-899346442361}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7FCBA4-6809-47A0-99D8-899346442361}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7FCBA4-6809-47A0-99D8-899346442361}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38EFC08-A392-45CC-AB7B-59CB5AD2C7C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38EFC08-A392-45CC-AB7B-59CB5AD2C7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38EFC08-A392-45CC-AB7B-59CB5AD2C7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38EFC08-A392-45CC-AB7B-59CB5AD2C7C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64F8C4D5-D504-4D9B-9EB5-1EF4E56B5E61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64F8C4D5-D504-4D9B-9EB5-1EF4E56B5E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64F8C4D5-D504-4D9B-9EB5-1EF4E56B5E61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64F8C4D5-D504-4D9B-9EB5-1EF4E56B5E61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D40A47C-D089-4F1A-96BD-359B647E845D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D40A47C-D089-4F1A-96BD-359B647E845D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D40A47C-D089-4F1A-96BD-359B647E845D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D40A47C-D089-4F1A-96BD-359B647E845D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516F8439-92F3-45D6-A3FA-2845E360048A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516F8439-92F3-45D6-A3FA-2845E360048A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516F8439-92F3-45D6-A3FA-2845E360048A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516F8439-92F3-45D6-A3FA-2845E360048A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23214207-27CA-4D62-AC56-B1BFC7B86A80}
+	EndGlobalSection
+EndGlobal

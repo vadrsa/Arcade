@@ -36,6 +36,9 @@
     <Reference Include="AsyncAwaitBestPractices, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AsyncAwaitBestPractices.4.0.1\lib\netstandard1.0\AsyncAwaitBestPractices.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -96,6 +99,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Commands.cs" />
     <Compile Include="Constants\SecurityCommands.cs" />
     <Compile Include="Features\Login\LoginFeature.cs" />
     <Compile Include="Features\Login\Services\IAuthenticationService.cs" />
@@ -104,6 +108,21 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule.cs" />
+    <Compile Include="Services\SystemSettingOMService.cs" />
+    <Compile Include="Services\SystemSettingService.cs" />
+    <Compile Include="Views\ConfigurationButton.xaml.cs">
+      <DependentUpon>ConfigurationButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\ConfigurationEdit\ConfigurationEditWorkitem.cs" />
+    <Compile Include="Workitems\ConfigurationEdit\Views\ConfigurationEditView.xaml.cs">
+      <DependentUpon>ConfigurationEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\ConfigurationEdit\Views\ConfigurationEditViewModel.cs" />
+    <Compile Include="Workitems\Configuration\ConfigurationWorkitem.cs" />
+    <Compile Include="Workitems\Configuration\Views\ConfigurationView.xaml.cs">
+      <DependentUpon>ConfigurationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\Configuration\Views\ConfigurationViewModel.cs" />
     <Compile Include="Workitems\Login\LoginWorkitem.cs" />
     <Compile Include="Workitems\Login\LoginWorkitemInitializationData.cs" />
     <Compile Include="Workitems\Login\Views\LoginView.xaml.cs">
@@ -120,6 +139,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ConfigurationButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Workitems\ConfigurationEdit\Views\ConfigurationEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Workitems\Configuration\Views\ConfigurationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Workitems\Login\Views\LoginView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -129,6 +160,14 @@
     <ProjectReference Include="..\..\Shared\SharedEntities\SharedEntities.csproj">
       <Project>{516F8439-92F3-45D6-A3FA-2845E360048A}</Project>
       <Name>SharedEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arcade.CustomControls\Arcade.CustomControls.csproj">
+      <Project>{4079f1ac-d833-428e-9e90-59e5ea440e9b}</Project>
+      <Name>Arcade.CustomControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arcade.ViewModel\Arcade.ViewModels.csproj">
+      <Project>{7F754255-84AD-4659-ADCF-50910781ACAA}</Project>
+      <Name>Arcade.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Wpf\Infrastructure.Wpf.csproj">
       <Project>{b38efc08-a392-45cc-ab7b-59cb5ad2c7c5}</Project>

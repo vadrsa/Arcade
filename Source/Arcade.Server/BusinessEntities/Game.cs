@@ -1,17 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Common.DataAccess;
+using LinqToDB.Mapping;
 
 namespace BusinessEntities
 {
-    public class Game
+
+    [Table("Games")]
+    public class Game : IDEntityBase<string>
     {
-        public string Id { get; set; }
-        
+        [Column]
         public string Name { get; set; }
 
-        public Image Image { get; set; }
+        [Column]
+        public string ImageId { get; set; }
 
+        [Column]
         public string Category { get; set; }
 
+        [Column]
         public int AgeLimit { get; set; }
+
+        [Association(ThisKey = nameof(ImageId), OtherKey = nameof(Id))]
+        public Image Image { get; set; }
     }
 }

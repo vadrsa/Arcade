@@ -24,7 +24,12 @@
                    Foreground="Red" 
                    Visibility="{Binding IsLoadingFaulted, Converter={StaticResource booleabVisibilityConverter}}" 
                    Text="{Binding LoadingErrorMessage}" TextWrapping="Wrap" />
-        
+
+        <!--<DataGrid Grid.RowSpan="3" Style="{DynamicResource MaterialDesignDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="asdasd"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>-->
         <StackPanel Grid.Row="1" Margin="40 40 40 40">
             <Label>Username</Label>
             <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -39,7 +44,6 @@
                 <ColumnDefinition Width="70"/>
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
-
             <Button IsDefault="True" Width="90" Grid.Column="1" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding LoginCommand}" HorizontalAlignment="Center" Content="Login"/>
             <Button Width="70" Grid.Column="2"  Style="{DynamicResource MaterialDesignToolButton}" HorizontalAlignment="Right" Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Cancel" />
 

@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace SecurityModule.Workitems.Login
 {
-    internal class LoginWorkitem : WorkitemWpfBase, ISupportsInitialization
+    internal class LoginWorkitem : WorkitemWpfBase, ISupportsInitialization<LoginWorkitemInitializationData>
     {
         IAuthenticationService _authenticationService;
 
@@ -33,10 +33,9 @@ namespace SecurityModule.Workitems.Login
             container.Register(new LoginView(), KnownRegions.Content);
         }
 
-        public void Initialize(object data)
-        {
-            if(data is LoginWorkitemInitializationData)
-                _authenticationService = ((LoginWorkitemInitializationData)data).AuthenticationService;
+        public void Initialize(LoginWorkitemInitializationData data)
+        { 
+            _authenticationService = data.AuthenticationService;
         }
     }
 }

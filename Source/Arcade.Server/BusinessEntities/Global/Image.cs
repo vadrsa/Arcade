@@ -1,10 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Common.DataAccess;
+using LinqToDB.Mapping;
+using System.ComponentModel.DataAnnotations;
 
 namespace BusinessEntities
 {
-    public class Image
+
+    [Table("Images")]
+    public class Image : IDEntityBase<string>
     {
-        public string Id { get; set; }
+        [Column]
         public string Path { get; set; }
     }
 }

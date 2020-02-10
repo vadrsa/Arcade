@@ -9,7 +9,7 @@ using Prism.Ioc;
 
 namespace GamesModule.Workitems.GameDetails
 {
-    public class GameDetailsWorkitem : WorkitemWpfBase, ISupportsInitialization
+    public class GameDetailsWorkitem : WorkitemWpfBase, ISupportsInitialization<string>
     {
         string id;
         GameDetailsDisplayViewModel _viewModel;
@@ -21,9 +21,9 @@ namespace GamesModule.Workitems.GameDetails
         public override string WorkItemName => "Game Details";
 
 
-        public void Initialize(object data)
+        public void Initialize(string data)
         {
-            id = (string)data;
+            id = data;
         }
 
         protected override void RegisterViews(IViewContainer container)
@@ -32,7 +32,7 @@ namespace GamesModule.Workitems.GameDetails
             _viewModel = (GameDetailsDisplayViewModel)container.Register<GameDetailsDisplayView>(new GameDetailsDisplayView(), KnownRegions.Content).DataContext;
         }
 
-        protected override async void AfterWorkitemRun()
+        protected override void AfterWorkitemRun()
         {
             base.AfterWorkitemRun();
             _viewModel.LoadGame(id);

@@ -197,6 +197,10 @@
       <Project>{0a7fcba4-6809-47a0-99d8-899346442361}</Project>
       <Name>SecurityModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StaffModule\StaffModule.csproj">
+      <Project>{7c16f2c8-a047-4083-af40-ec2ac97ff1d0}</Project>
+      <Name>StaffModule</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Vroom_Final-scaled.jpg" />

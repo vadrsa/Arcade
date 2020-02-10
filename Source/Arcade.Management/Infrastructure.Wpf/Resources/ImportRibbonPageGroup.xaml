@@ -1,0 +1,21 @@
+﻿<dxr:RibbonPageGroup x:Class="Infrastructure.Resources.ImportRibbonPageGroup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" 
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" 
+             xmlns:inf="clr-namespace:Infrastructure"
+             xmlns:kernel="clr-namespace:Kernel;assembly=Kernel"
+             xmlns:const="clr-namespace:Infrastructure.Constants" 
+             mc:Ignorable="d" 
+             >
+    <dxb:BarButtonItem Content="Import From Excel" Glyph="{inf:CustomImage Image=table_export_excel_16}" LargeGlyph="{inf:CustomImage Image=table_export_excel_32}" >
+        <dxb:BarButtonItem.Style>
+            <Style>
+                <Setter Property="kernel:CommandManager.CommandName"  Value="{x:Static const:Commands.ImportFromExcel}"></Setter>
+            </Style>
+        </dxb:BarButtonItem.Style>
+    </dxb:BarButtonItem>
+
+</dxr:RibbonPageGroup>

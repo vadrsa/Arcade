@@ -1,14 +1,10 @@
 ﻿using Common.Core;
-using Common.Enums;
 using Common.Faults;
 using Common.Logging;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SharedEntities;
 using System;
-using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -46,10 +42,12 @@ namespace Common.ResponseHandling
                 context.Response.ContentType = "application/json";
                 FaultType faultType;
                 string exceptionMessage = null;
+                object descriptor = null;
                 if (exception is FaultException)
                 {
                     exceptionMessage = (exception as FaultException).Message;
                     faultType = (exception as FaultException).Type;
+                    descriptor = (exception as FaultException).Descriptor;
                     _logger.LogFault(context.TraceIdentifier, exception as FaultException);
                 }
                 else
@@ -63,9 +61,9 @@ namespace Common.ResponseHandling
                     exceptionMessage = fault.Description;
                 context.Response.StatusCode = (int)fault.HttpStatusCode;
 
-                await context.WriteErrorDataAsync(new FaultResponse(fault.Code, exceptionMessage, context.TraceIdentifier, fault.HttpStatusCode));
+                await context.WriteErrorDataAsync(new FaultResponse(fault.Code, exceptionMessage, context.TraceIdentifier, fault.HttpStatusCode, descriptor));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogCritical(e, context.TraceIdentifier + " Internal Error");
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

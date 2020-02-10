@@ -42,6 +42,7 @@ namespace Shell
             base.ConfigureModuleCatalog(moduleCatalog);
             moduleCatalog.AddModule<Modules.SecurityModule>();
             moduleCatalog.AddModule<Modules.GamesModule>();
+            moduleCatalog.AddModule<Modules.StaffModule>();
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings mappings)

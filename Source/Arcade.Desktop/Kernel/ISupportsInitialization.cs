@@ -3,13 +3,13 @@
     /// <summary>
     /// Adds initialization to a class
     /// </summary>
-    public interface ISupportsInitialization
+    public interface ISupportsInitialization<T>
     {
 
         /// <summary>
         /// Initialize with data
         /// </summary>
         /// <param name="data">data to initialize with</param>
-        void Initialize(object data);
+        void Initialize(T data);
     }
 }

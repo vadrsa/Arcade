@@ -1,24 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200125075558_MakeFaultIdNotIdentity.cs" />
-    <Compile Remove="Migrations\20200125075558_MakeFaultIdNotIdentity.Designer.cs" />
-    <Compile Remove="Migrations\20200125125841_EditGame.cs" />
-    <Compile Remove="Migrations\20200125125841_EditGame.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+    <PackageReference Include="linq2db" Version="2.9.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BusinessEntities\BusinessEntities.csproj" />
+    <ProjectReference Include="..\Facade\Facade.csproj" />
   </ItemGroup>
 
 </Project>

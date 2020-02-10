@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Security;
+using Kernel.Workitems;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Mvvm
@@ -7,7 +8,8 @@ namespace Infrastructure.Mvvm
     /// <summary>
     /// Adds CRUD functionality to WorkitemViewModel
     /// </summary>
-    public abstract class CrudWorkitemManagerViewModel : WorkitemViewModel
+    public abstract class CrudWorkitemManagerViewModel<T> : WorkitemViewModel<T>
+        where T: IWorkItem
     {
 
         #region Commands

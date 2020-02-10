@@ -1,7 +1,7 @@
 ﻿namespace Infrastructure.Mvvm
 {
-    public interface IIdEntityViewModel
+    public interface IIdEntityViewModel<K>
     {
-        int ID { get; set; }
+        K Id { get; set; }
     }
 }

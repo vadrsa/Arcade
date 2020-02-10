@@ -14,14 +14,15 @@ namespace Infrastructure.Mvvm
     /// <summary>
     /// Base class for all WorkitemViewModel's
     /// </summary>
-    public class WorkitemViewModel : BaseViewModel, IWorkitemAware, IDisposableContainer
+    public class WorkitemViewModel<T> : BaseViewModel, IWorkitemAware<T>, IDisposableContainer
+        where T: IWorkItem
     {
 
         List<IDisposable> disposables = new List<IDisposable>();
 
-        private IWorkItem workitem;
+        private T workitem;
 
-        public IWorkItem Workitem
+        public T Workitem
         {
             get { return workitem; }
             private set { Set(ref workitem, value, nameof(Workitem)); }
@@ -70,7 +71,6 @@ namespace Infrastructure.Mvvm
             LoadCustom(DoLoad);
         }
 
-
         public async Task LoadCustom(Func<CancellationToken, Task> task)
         {
             IsLoading = true;
@@ -85,8 +85,8 @@ namespace Infrastructure.Mvvm
             {
                 IsLoadingFaulted = true;
                 var response = await ApiExceptionHandling.GetResponse(e);
-                LoadingErrorMessage = response.Message;
-                if (response.TraceId != null)
+                LoadingErrorMessage = GetFaultMessage(response) ?? response.Message;
+                if (response.Status == 500 && response.TraceId != null)
                     LoadingErrorMessage += $"\n Trace Id: {response.TraceId}";
             }
             finally
@@ -109,7 +109,7 @@ namespace Infrastructure.Mvvm
             {
                 IsLoadingFaulted = true;
                 var response = await ApiExceptionHandling.GetResponse(e);
-                LoadingErrorMessage = response.Message;
+                LoadingErrorMessage = GetFaultMessage(response) ?? response.Message;
                 if (response.TraceId != null)
                     LoadingErrorMessage += $"\n Trace Id: {response.TraceId}";
                 return default;
@@ -118,6 +118,13 @@ namespace Infrastructure.Mvvm
             {
                 IsLoading = false;
             }
+        }
+
+        protected virtual string GetFaultMessage(FaultResponse response)
+        {
+            if (response.Status == 403)
+                return "You are unauthorized to access the resource";
+            return null;
         }
 
         protected virtual Task DoLoad(CancellationToken token)
@@ -131,11 +138,17 @@ namespace Infrastructure.Mvvm
             Load();
         }
 
-        public void SetWorkitem(IWorkItem workItem)
+        public void SetWorkitem(T workItem)
         {
             Workitem = workItem;
 
             AppSecurityContext.AppPrincipalChanged += HandleAutheticationStateChanged;
+
+            OnWorkitemSet();
+        }
+
+        protected virtual void OnWorkitemSet()
+        {
         }
 
         private void HandleAutheticationStateChanged(object sender, EventArgs e)

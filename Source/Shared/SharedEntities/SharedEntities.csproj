@@ -45,12 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationRole.cs" />
+    <Compile Include="Attributes\IgnoreValueAttribute.cs" />
+    <Compile Include="EmployeeDto.cs" />
     <Compile Include="Faults\FaultResponse.cs" />
     <Compile Include="Faults\FaultType.cs" />
     <Compile Include="GameDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\UserDTO.cs" />
     <Compile Include="Security\UserRolesDTO.cs" />
+    <Compile Include="SystemSettingDto.cs" />
+    <Compile Include="SystemSettingType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

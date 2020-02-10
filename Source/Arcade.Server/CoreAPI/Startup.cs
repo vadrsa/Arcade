@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
-using AutoMapper.EquivalencyExpression;
 using BusinessEntities;
 using Common.Configuration;
 using Common.Core;
-using Common.Enums;
 using Common.Faults;
 using Common.Filters;
-using Common.Localization;
-using Common.Middleware;
 using Common.ResponseHandling;
-using Common.Services;
 using DataAccess;
-using DataAccess.Middleware;
 using Facade.Configuration;
 using Facade.Managers;
 using FluentValidation.AspNetCore;
@@ -20,19 +14,21 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
-using System.Net;
-using System.Reflection;
 using System.Text;
+using LinqToDB;
+using LinqToDB.Data;
+using LinqToDB.DataProvider.SqlServer;
+using LinqToDB.Identity;
+using Facade.Repositories;
+using DataAccess.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoreAPI
 {
@@ -48,11 +44,18 @@ namespace CoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ArcadeContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("arcade")), ServiceLifetime.Scoped);
+            // Set Linq2DB Connection String
+            DataConnection
+                .AddConfiguration(
+                    "Default",
+                    Configuration.GetConnectionString("arcade"),
+                    new SqlServerDataProvider("Default", SqlServerVersion.v2012));
 
+            DataConnection.DefaultConfiguration = "Default";
+
+            // Configure Linq2DB Identity
             services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<ArcadeContext>()
+                .AddLinqToDBStores(new DefaultConnectionFactory())
                 .AddDefaultTokenProviders();
 
             #region Authentication Configuration
@@ -124,22 +127,18 @@ namespace CoreAPI
                 options.IdleTimeout = TimeSpan.FromSeconds(60);
                 options.Cookie.IsEssential = true;
             });
+            services.AddScoped<ArcadeContext>();
             //var mapperConfiguration =  new MapperConfiguration(conf => conf.AddMaps(Assembly.GetAssembly(typeof(ProfileLocator))));
             //services.AddSingleton<AutoMapper.IConfigurationProvider>(mapperConfiguration);
             //services.AddSingleton<IMapper>(mapperConfiguration.CreateMapper());
             services.AddOptions();
             IConfigurationSection globalOptionsSection = Configuration.GetSection("GlobalOptions");
 
-            services.AddAutoMapper((serviceProvider, automapper) =>
-            {
-                automapper.AddCollectionMappers();
-                automapper.UseEntityFrameworkCoreModel<ArcadeContext>(serviceProvider);
-            }, typeof(ProfileLocator).Assembly);
+            services.AddAutoMapper(typeof(ProfileLocator).Assembly);
 
             GlobalOptions globalOptions = globalOptionsSection.Get<GlobalOptions>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<ServiceProvider>(services.BuildServiceProvider());
-
         }
 
         private void AddManagers(IServiceCollection services)
@@ -150,12 +149,18 @@ namespace CoreAPI
             services.AddTransient<IAssetManager, AssetManager>();
             services.AddTransient<IGameManager, GameManager>();
             services.AddTransient<IFaultManager, FaultManager>();
+            services.AddTransient<IEmployeeManager, EmployeeManager>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
+            services.AddTransient<IImageRepository, ImageRepository>();
+            services.AddTransient<ISystemSettingManager, SystemSettingManager>();
+            services.AddTransient<ISystemSettingRepository, SystemSettingRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
+
             app.UseStaticFiles();
             app.UseResponseCaching();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
@@ -174,7 +179,7 @@ namespace CoreAPI
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseHttpContext();
-            app.UseMiddleware<ContextManagementMiddleware>();
+            app.UseMiddleware<ErrorhandlingMiddleware>();
             //app.UseSimulatedLatency(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5));
             app.UseMvc();
         }

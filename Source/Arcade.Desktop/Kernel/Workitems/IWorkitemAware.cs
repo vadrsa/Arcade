@@ -1,7 +1,7 @@
 ﻿namespace Kernel.Workitems
 {
-    public interface IWorkitemAware
+    public interface IWorkitemAware<T>
     {
-        void SetWorkitem(IWorkItem workItem);
+        void SetWorkitem(T workItem);
     }
 }

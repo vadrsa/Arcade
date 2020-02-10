@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GamesModule.Workitems.GameDetails.Views
 {
-	public class GameDetailsDisplayViewModel : WorkitemViewModel
+	public class GameDetailsDisplayViewModel : WorkitemViewModel<GameDetailsWorkitem>
 	{
 		private string id;
 

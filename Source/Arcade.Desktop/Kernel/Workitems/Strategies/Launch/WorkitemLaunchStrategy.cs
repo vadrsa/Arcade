@@ -142,16 +142,24 @@ namespace Kernel.Workitems.Strategies.Launch
                         return null;
                     }
                 }
-
+                var impl = Workitem.GetType().GetInterfaces().FirstOrDefault(x =>
+                              x.IsGenericType &&
+                              x.GetGenericTypeDefinition() == typeof(ISupportsInitialization<>));
                 // If workitem supports initialization than do initialize it
-                if (Workitem is ISupportsInitialization)
+                if (impl != null)
                 {
-                    var initable = Workitem as ISupportsInitialization;
                     //Logger.LogWithWorkitemData("Initializing workitem", LogLevel.Informative, Workitem);
                     try
                     {
+                        var initType = impl.GetGenericArguments()[0];
                         // initialize
-                        initable.Initialize(Data);
+                        if (Data == null || initType.IsAssignableFrom(Data.GetType()))
+                        {
+                            var methodInfo = Workitem.GetType().GetMethod("Initialize", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                            methodInfo.Invoke(Workitem, new object[] { Data });
+                        }
+                        else
+                            throw new ArgumentException($"Workitem supports initialization only by {initType}");
                     }
                     catch (Exception e)
                     {

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace GamesModule.Workitems.GamesDisplay.Views
 {
-    public class GamesDisplayViewModel : WorkitemViewModel
+    class GamesDisplayViewModel : WorkitemViewModel<GamesDisplayWorkitem>
     {
         private const string ALL_CATEGORIES_NAME = "All";
 

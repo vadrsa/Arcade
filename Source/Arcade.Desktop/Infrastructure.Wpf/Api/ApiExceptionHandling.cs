@@ -33,7 +33,7 @@ namespace Infrastructure.Api
                 }
                 catch
                 {
-                    return new UnexpectedFault();
+                    return new UnexpectedFault(0);
                 }
 
                 if (!flurlEx.Call.Completed)
@@ -42,13 +42,13 @@ namespace Infrastructure.Api
                 {
                     string message = GetStatusCodeMessage(flurlEx.Call.Response.StatusCode);
                     if (message == null)
-                        return new UnexpectedFault();
+                        return new UnexpectedFault((int)flurlEx.Call.Response.StatusCode);
                     else
                         return new FaultResponse(0, message, null, (int)flurlEx.Call.Response.StatusCode);
                 }
             }
             else
-                return new UnexpectedFault();
+                return new UnexpectedFault(0);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Common.Faults
 
         public FaultType Type => _type;
 
+        public object Descriptor { get; set; }
+
         public FaultException(FaultType type, string message = "") : base(message)
         {
             _type = type;

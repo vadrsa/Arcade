@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Identity;
+using LinqToDB.Identity;
 using System;
 
 namespace BusinessEntities
 {
-    public class User : IdentityUser<Guid>
+    public class User : IdentityUser
     {
     }
 

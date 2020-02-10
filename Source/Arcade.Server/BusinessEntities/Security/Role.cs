@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LinqToDB.Identity;
 using System;
 
 namespace BusinessEntities
 {
-    public class Role : IdentityRole<Guid>
+    public class Role : IdentityRole
     {
 
         public Role() { }

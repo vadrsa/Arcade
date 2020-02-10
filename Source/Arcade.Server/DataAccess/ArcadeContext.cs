@@ -1,75 +1,58 @@
 ﻿using BusinessEntities;
+using Common.DataAccess;
 using Common.Faults;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
-using System;
+using LinqToDB;
+using LinqToDB.Identity;
+using LinqToDB.Mapping;
+using System.Linq;
 
 namespace DataAccess
 {
-    public class ArcadeContext : IdentityDbContext<User, Role, Guid>
+    public class ArcadeContext : IdentityDataConnection<User, Role, string>
     {
-        public static int idCounter = 1;
+        private static MappingSchema mappingSchema;
 
-        public int id;
-
-        string connectionString;
-
-        public DbSet<Image> Images { get; set; }
-
-        public DbSet<Game> Games { get; set; }
-
-        public DbSet<Fault> Faults { get; set; }
-
-        public ArcadeContext(DbContextOptions<ArcadeContext> contextOptions)
+        public ArcadeContext() : base("Default")
         {
-            connectionString = contextOptions.GetExtension<SqlServerOptionsExtension>().ConnectionString;
-            id = idCounter++;
+
+            if (mappingSchema == null)
+                mappingSchema = InitContextMappings(this.MappingSchema);
+            FluentMappingBuilder mb = MappingSchema.GetFluentMappingBuilder();
+
+            MappingSchema.EntityDescriptorCreatedCallback = (mappingSchema, entityDescriptor) =>
+            {
+                if (!entityDescriptor.TypeAccessor.Type.IsAbstract)
+                {
+                    if (entityDescriptor.TypeAccessor.Type.IsSubclassOf(typeof(IDEntityBase<>)))
+                    {
+                        var idCol = entityDescriptor.Columns.Where(c => c.MemberName == "ID").FirstOrDefault();
+                        if (idCol.MemberName == idCol.ColumnName)
+                            idCol.ColumnName = entityDescriptor.TypeAccessor.Type.Name + "ID";
+
+                    }
+
+                }
+            };
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        private static MappingSchema InitContextMappings(MappingSchema ms)
         {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(connectionString);
+            ms.GetFluentMappingBuilder()
+                .Entity<IDEntityBase<int>>()
+                .HasPrimaryKey(x => x.Id)
+                .HasIdentity(x => x.Id);
+
+            ms.GetFluentMappingBuilder()
+                .Entity<IDEntityBase<string>>()
+                .HasPrimaryKey(x => x.Id);
+            return ms;
+
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<Image>()
-                .Property(p => p.Id)
-                .ValueGeneratedOnAdd();
-
-            builder.Entity<Image>()
-                .HasKey(p => p.Id);
-
-            builder.Entity<Game>()
-                .Property(p => p.Id)
-                .ValueGeneratedOnAdd();
-
-            builder.Entity<Game>()
-                .HasKey(p => p.Id);
-
-            builder.Entity<Game>()
-                .Property(p => p.Name)
-                .IsRequired();
-
-            builder.Entity<Game>()
-                .Property(p => p.Category)
-                .IsRequired();
-
-            builder.Entity<Fault>()
-                .HasKey(p => p.Code);
-
-            builder.Entity<Fault>()
-                .Property(p => p.Code)
-                .ValueGeneratedNever();
-
-            builder.Entity<Fault>()
-                .Property(p => p.HttpStatusCode)
-                .IsRequired();
-
-        }
+        public ITable<Fault> Faults => GetTable<Fault>();
+        public ITable<Employee> Employees => GetTable<Employee>();
+        public ITable<Game> Games => GetTable<Game>();
+        public ITable<Image> Images => GetTable<Image>();
+        public ITable<SystemSetting> SystemSettings => GetTable<SystemSetting>();
     }
 }

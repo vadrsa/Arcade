@@ -1,6 +1,8 @@
 ﻿using Common.Faults;
 using DataAccess;
+using LinqToDB;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
 using SharedEntities;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Managers.Implementation
 {
-    public class FaultManager : ManagerBase<ArcadeContext>, IFaultManager
+    public class FaultManager : ManagerBase, IFaultManager
     {
         public FaultManager(IServiceProvider serviceProvider) : base(serviceProvider)
         {
@@ -22,7 +24,7 @@ namespace Managers.Implementation
 
         private async Task<List<Fault>> GetFaults(ICacheEntry arg)
         {
-            return await Context.Faults.ToAsyncEnumerable().ToList();
+            return await ServiceProvider.GetService<ArcadeContext>().Faults.ToListAsync();
         }
 
         public async Task<Fault> GetByCode(int code)

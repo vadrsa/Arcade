@@ -19,11 +19,11 @@
 
         <Grid>
             <StackPanel>
-                <Button Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Command="{Binding AddGameCommand}" Margin="20" HorizontalAlignment="Left">
+                <Button Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Command="{Binding AddCommand}" Margin="20" HorizontalAlignment="Left">
                     <materialDesign:PackIcon Kind="Add" Height="24" Width="24" />
                 </Button>
 
-                <ItemsControl ItemsSource="{Binding Games}" Margin="20">
+                <ItemsControl ItemsSource="{Binding List}" Margin="20">
                     <ItemsControl.Template>
                         <ControlTemplate>
                             <ItemsPresenter />
@@ -47,14 +47,14 @@
                                     </Grid.RowDefinitions>
                                     <Image Source="{Binding Image}" Height="140" Width="200" Stretch="UniformToFill" />
                                     <Button Grid.Row="0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
-                                            Command="{Binding Path=DataContext.DeleteGameCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding Id}"
                                         HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                         Margin="0 0 16 -20">
                                         <materialDesign:PackIcon Kind="Delete" />
                                     </Button>
                                     <Button Grid.Row="0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
-                                            Command="{Binding Path=DataContext.EditGameCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding Id}"
                                         HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                         Margin="0 0 80 -20">
@@ -71,16 +71,13 @@
                 </ItemsControl>
             </StackPanel>
             <Border
-                Grid.RowSpan="2"
-                Grid.Row="1" 
                 Visibility="{Binding IsLoading, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}"
                 Background="Black"
                 Opacity="0.8">
             </Border>
-            <controls:LoadingIndicator Grid.RowSpan="2" SpeedRatio="1.5" IsActive="{Binding IsLoading, FallbackValue=False}" Mode="Arcs" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-            <controls:FaultedPage 
-                    Grid.RowSpan="2"
-                    VerticalAlignment="Center" Visibility="{Binding IsLoadingFaulted, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}" Message="{Binding LoadingErrorMessage}" Command="{Binding ReloadCommand}"/>
+            <controls:LoadingIndicator  SpeedRatio="1.5" IsActive="{Binding IsLoading, FallbackValue=False}" Mode="Arcs" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+            <controls:FaultedPage
+                Visibility="{Binding IsLoadingFaulted, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}" Message="{Binding LoadingErrorMessage}" Command="{Binding ReloadCommand}"/>
 
         </Grid>
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GamesModule.Services
 {
-    class GamesService : RestConsumingServiceBase
+    public class GamesService : RestConsumingServiceBase
     {
         public GamesService() : base("games", ConfigurationManager.AppSettings["ApiUrl"])
         {

@@ -103,14 +103,14 @@
   <ItemGroup>
     <Compile Include="ArcadeProject.cs" />
     <Compile Include="Behaviours\WorkitemOneOfTypeLaunchBehaviour.cs" />
+    <Compile Include="Configuration\EmployeeProfile.cs" />
     <Compile Include="Configuration\GamesProfile.cs" />
+    <Compile Include="Configuration\SystemSettingProfile.cs" />
     <Compile Include="Constants\Regions.cs" />
     <Compile Include="DialogHostWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
-    <Compile Include="ViewModels\GameUploadViewModel.cs" />
-    <Compile Include="ViewModels\GameDetailsViewModel.cs" />
-    <Compile Include="ViewModels\GameViewModel.cs" />
+    <Compile Include="Services\UIManager.cs" />
     <Compile Include="Views\ModalRegionPopup.xaml.cs">
       <DependentUpon>ModalRegionPopup.xaml</DependentUpon>
     </Compile>
@@ -119,6 +119,10 @@
     <ProjectReference Include="..\..\Shared\SharedEntities\SharedEntities.csproj">
       <Project>{516F8439-92F3-45D6-A3FA-2845E360048A}</Project>
       <Name>SharedEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arcade.ViewModel\Arcade.ViewModels.csproj">
+      <Project>{7F754255-84AD-4659-ADCF-50910781ACAA}</Project>
+      <Name>Arcade.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Wpf\Infrastructure.Wpf.csproj">
       <Project>{B38EFC08-A392-45CC-AB7B-59CB5AD2C7C5}</Project>

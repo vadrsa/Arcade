@@ -19,7 +19,7 @@ namespace Arcade.Services
         public async Task<UserDto> AuthenticateAsync(string username, string password, CancellationToken token = default)
         {
             var user = await BuildRequest("login").PostJsonAsync(new LoginDto { Username = username, Password = password }, token).ReceiveJson<UserDto>();
-            AppSecurityContext.SetCurrentPrincipal(new AppPrincipal(new AppIdentity(user.UserName, user.Token)));
+            AppSecurityContext.SetCurrentPrincipal(new AppPrincipal(new AppIdentity(user.UserName, user.Token, user.Roles)));
             return user;
         }
 

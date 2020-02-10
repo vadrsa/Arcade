@@ -1,8 +1,6 @@
 ﻿using AsyncAwaitBestPractices;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -38,7 +36,7 @@ namespace Infrastructure.Mvvm
 
         public bool IsExecuting => _isExecuting;
 
-        public bool CanExecute()
+        public virtual bool CanExecute()
         {
             return !_isExecuting && (_canExecute?.Invoke() ?? true);
         }
@@ -109,14 +107,14 @@ namespace Infrastructure.Mvvm
         }
 
         public bool IsExecuting(T parameter)
-        { 
+        {
             bool isExecuting = false;
             if (_isExecuting.ContainsKey(parameter))
                 isExecuting = _isExecuting[parameter];
             return isExecuting;
         }
 
-        public bool CanExecute(T parameter)
+        public virtual bool CanExecute(T parameter)
         {
             return !IsExecuting(parameter) && (_canExecute?.Invoke(parameter) ?? true);
         }
@@ -149,7 +147,10 @@ namespace Infrastructure.Mvvm
         #region Explicit implementations
         bool ICommand.CanExecute(object parameter)
         {
-            return CanExecute((T)parameter);
+            if (parameter == null)
+                return CanExecute(default);
+            else
+                return CanExecute((T)parameter);
         }
 
         void ICommand.Execute(object parameter)
