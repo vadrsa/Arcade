@@ -66,9 +66,9 @@ namespace Infrastructure.Mvvm
             }
         }
 
-        protected void Load()
+        public async void Load()
         {
-            LoadCustom(DoLoad);
+            await LoadCustom(DoLoad);
         }
 
         public async Task LoadCustom(Func<CancellationToken, Task> task)

@@ -17,11 +17,10 @@ namespace Arcade.Behaviours
             }
             else
             {
-                if (launchDescriptor.IsRoot &&
-                    !launchDescriptor.IsModal &&
-                    service.Workitems.Where(w => w.Parent == null && !w.IsModal).Count() == 1)
+                if (!launchDescriptor.IsModal &&
+                    service.Workitems.Where(w => w.Parent == launchDescriptor.Parent && !w.IsModal).Count() == 1)
                 {
-                    await service.CloseWorkitem(service.Workitems.First(w => w.Parent == null && !w.IsModal));
+                    await service.CloseWorkitem(service.Workitems.First(w => w.Parent == launchDescriptor.Parent && !w.IsModal));
                 }
             }
             return true;

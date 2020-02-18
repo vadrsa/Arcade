@@ -9,6 +9,6 @@ namespace SharedEntities
     public enum SystemSettingType
     {
         Undefined = 0,
-        HourlyRate = 1
+        QueuePrintDimensions = 1
     }
 }

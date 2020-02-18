@@ -65,7 +65,7 @@ namespace Infrastructure.ObjectManagement
             await viewModel.LoadCustom(DoSave);
         }
 
-        private async Task DoSave(CancellationToken token)
+        protected virtual async Task DoSave(CancellationToken token)
         {
             if (IsAdding)
             {

@@ -1,0 +1,34 @@
+﻿<ItemsControl x:Class="SecurityModule.Workitems.Configuration.Views.ConfigurationMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:inf="clr-namespace:Infrastructure;assembly=Infrastructure.Wpf" 
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:kernel="clr-namespace:Kernel;assembly=Kernel"
+        xmlns:const="clr-namespace:SecurityModule.Constants"
+             xmlns:local="clr-namespace:SecurityModule.Workitems.Configuration.Views"
+             mc:Ignorable="d" 
+              inf:CollectionProperties.HideIfEmpty="True"
+               Background="WhiteSmoke"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <ItemsControl >
+        <MenuItem 
+              Style="{DynamicResource MaterialDesignMenuItem}"
+              kernel:CommandManager.CommandName="{x:Static const:Commands.OpenSystemSettingsWorkitem}"
+              Foreground="Black" Header="System Settings" FontSize="14" FontWeight="Medium" >
+        </MenuItem>
+
+        <MenuItem 
+              Style="{DynamicResource MaterialDesignMenuItem}"
+              kernel:CommandManager.CommandName="{x:Static const:Commands.OpenComputerSettingsWorkitem}"
+              Foreground="Black" Header="Computers" FontSize="14" FontWeight="Medium" >
+        </MenuItem>
+        <MenuItem 
+              Style="{DynamicResource MaterialDesignMenuItem}"
+              kernel:CommandManager.CommandName="{x:Static const:Commands.OpenArcadeSettingsWorkitem}"
+              Foreground="Black" Header="Arcade" FontSize="14" FontWeight="Medium" >
+        </MenuItem>
+    </ItemsControl>
+</ItemsControl>

@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mvvm="clr-namespace:Infrastructure.Mvvm;assembly=Infrastructure.Wpf"
     xmlns:local="clr-namespace:Arcade.CustomControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
     xmlns:styles="clr-namespace:Arcade.CustomControls.Styles"
     >
 
@@ -57,4 +58,14 @@
 
     <Style TargetType="{x:Type local:LoadingIndicator}" BasedOn="{styles:MultiStyle LoadingIndicatorArcsStyle LoadingIndicatorArcsRingStyle LoadingIndicatorDoubleBounceStyle LoadingIndicatorFlipPlaneStyle LoadingIndicatorPulseStyle LoadingIndicatorRingStyle LoadingIndicatorThreeDotsStyle LoadingIndicatorWaveStyle}" />
 
+
+    <Style TargetType="{x:Type local:TimeRemaining}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TimeRemaining}">
+                    <TextBlock Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" ><Run Text="{Binding RemainingTime, RelativeSource={RelativeSource TemplatedParent}}"/></TextBlock>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

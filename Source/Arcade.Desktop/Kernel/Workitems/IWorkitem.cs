@@ -41,6 +41,11 @@ namespace Kernel.Workitems
         bool IsModal { get; }
 
         /// <summary>
+        /// If True the workitem will remian focused after a child workitem is opened
+        /// </summary>
+        bool SupportsMultiFocus { get; }
+
+        /// <summary>
         /// Provides configuration object for the workitem
         /// </summary>
         IOptionConfiguration Configuration { get; }

@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="StaffModule.Workitems.SessionManager.View.SessionManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StaffModule.Workitems.SessionManager.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:mvvm="clr-namespace:Infrastructure.Mvvm;assembly=Infrastructure.Wpf" 
+             xmlns:controls="clr-namespace:Arcade.CustomControls;assembly=Arcade.CustomControls" 
+             xmlns:prism="http://prismlibrary.com/"
+            prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <mvvm:BooleanToVisibilityConverter x:Key="visibilityConverter"/>
+        <mvvm:InverseBooleanConverter x:Key="inverseBoolean"/>
+
+        <mvvm:UtcToLocalConverter x:Key="UtcToLocalConverter" />
+    </UserControl.Resources>
+    <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
+
+        <Grid>
+            <StackPanel>
+
+                <Button Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Command="{Binding ReloadCommand}" Margin="20" HorizontalAlignment="Left">
+                    <materialDesign:PackIcon Kind="Reload" Height="24" Width="24" />
+                </Button>
+                
+                <ItemsControl ItemsSource="{Binding List}" Margin="20">
+                    <ItemsControl.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter />
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Card
+                                IsEnabled="{Binding IsTerminated, Converter={StaticResource inverseBoolean}}"
+                        Margin="10">
+                                <Grid Margin="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="2" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                                            Command="{Binding Path=DataContext.CreateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding Id}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                        <materialDesign:PackIcon Kind="Add" />
+                                    </Button>
+                                    <Button  Grid.Column="4" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                                            Command="{Binding Path=DataContext.EnqueueCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding Id}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                        <materialDesign:PackIcon Kind="Queue" />
+                                    </Button>
+                                    <Button  Grid.Column="6" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                                            Command="{Binding Path=DataContext.EndSessionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding Id}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                        <materialDesign:PackIcon Kind="TimerOff" />
+                                    </Button>
+                                    <StackPanel Grid.Column="0" Margin="10" Orientation="Vertical" >
+                                        <TextBlock FontWeight="Bold" ><Run Text="{Binding Type.Name}"/><Run Text=" #"/><Run Text="{Binding Number}"/></TextBlock>
+                                        <controls:TimeRemaining Foreground="Red" Format="~ {0} remaining" TimeElapsed="{Binding Path=DataContext.ReloadCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"  FinishTime="{Binding NextAvailableTime, Converter={StaticResource UtcToLocalConverter}}"/>
+                                        <TextBlock Foreground="Red" Visibility="{Binding PotentialProblemWithQueue, Converter={StaticResource visibilityConverter}}">There may be a problem with the queue system for this computer<LineBreak/>Fix the queue and reload</TextBlock>
+
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:Card>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <Border
+                Visibility="{Binding IsLoading, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}"
+                Background="Black"
+                Opacity="0.8">
+            </Border>
+            <controls:LoadingIndicator  SpeedRatio="1.5" IsActive="{Binding IsLoading, FallbackValue=False}" Mode="Arcs" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+            <controls:FaultedPage
+                Visibility="{Binding IsLoadingFaulted, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}" Message="{Binding LoadingErrorMessage}" Command="{Binding ReloadCommand}"/>
+
+        </Grid>
+
+    </ScrollViewer>
+</UserControl>

@@ -21,12 +21,19 @@ namespace Infrastructure.ObjectManagement
         protected override void RegisterViews(IViewContainer container)
         {
             base.RegisterViews(container);
-            container.Register(Container.Resolve<TView>(), KnownRegions.Content);
+            container.Register<TView>(Container.Resolve<TView>(), KnownRegions.Content);
         }
 
-        public async Task<IObservable<bool>> RunAddEdit(TDetails details, bool isAdding)
+        public virtual async Task<IObservable<bool>> RunAddEdit(TDetails details, bool isAdding)
         {
-            return (await CurrentContextService.LaunchModalWorkItem<TDetailsWI>(new ObjectManagerDetailsInitializer<TDetails> { Details = details, IsAdding = isAdding }, this)).Where(w => w.Data is bool).Select(w => (bool)w.Data);
+            try
+            {
+                return (await CurrentContextService.LaunchModalWorkItem<TDetailsWI>(new ObjectManagerDetailsInitializer<TDetails> { Details = details, IsAdding = isAdding }, this)).Where(w => w.Data is bool).Select(w => (bool)w.Data);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

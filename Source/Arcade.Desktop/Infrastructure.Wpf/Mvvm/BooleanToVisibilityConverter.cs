@@ -9,7 +9,12 @@ namespace Infrastructure.Mvvm
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value is bool && (bool)value) ? Visibility.Visible : Visibility.Collapsed;
+            var boolean = (value is bool && (bool)value);
+
+            if (parameter != null && Boolean.Parse(parameter.ToString()))
+                boolean = !boolean;
+
+            return boolean ? Visibility.Visible : Visibility.Collapsed;
 
         }
 

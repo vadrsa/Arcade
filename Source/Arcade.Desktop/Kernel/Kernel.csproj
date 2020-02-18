@@ -40,6 +40,9 @@
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
@@ -115,10 +118,14 @@
     <Compile Include="Prism\RegionTransformationBase.cs" />
     <Compile Include="Prism\RegionTransformationCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\IStorage.cs" />
+    <Compile Include="Storage\LocalStorage.cs" />
+    <Compile Include="Storage\StorageResponse.cs" />
     <Compile Include="Utility\DispisableHelper.cs" />
     <Compile Include="Utility\DisposableAction.cs" />
     <Compile Include="Utility\ReflectionHelpers.cs" />
     <Compile Include="Utility\RegionManagerExtensions.cs" />
+    <Compile Include="Utility\StringCipher.cs" />
     <Compile Include="Utility\UIExtensions.cs" />
     <Compile Include="Utility\UIHelper.cs" />
     <Compile Include="Workitems\Attributes\SingleInstanceWorkitemAttribute.cs" />
@@ -146,6 +153,7 @@
     <Compile Include="Workitems\Strategies\Close\RootWorkitemCloseStrategy.cs" />
     <Compile Include="Workitems\Strategies\Close\WorkitemCloseStrategy.cs" />
     <Compile Include="Workitems\Strategies\Focus\ModalWorkitemFocusStrategy.cs" />
+    <Compile Include="Workitems\Strategies\Focus\ChildWorkitemFocusStrategy.cs" />
     <Compile Include="Workitems\Strategies\Focus\RootWorkitemFocusStrategy.cs" />
     <Compile Include="Workitems\Strategies\Focus\WorkitemFocusStrategy.cs" />
     <Compile Include="Workitems\Strategies\Focus\WorkitemUnfocusStrategy.cs" />

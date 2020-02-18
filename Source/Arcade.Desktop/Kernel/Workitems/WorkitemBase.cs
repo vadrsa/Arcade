@@ -2,6 +2,7 @@
 using Kernel.Configuration;
 using Kernel.Managers;
 using Kernel.Prism;
+using Kernel.Storage;
 using Kernel.Utility;
 using Prism.Ioc;
 using System;
@@ -23,6 +24,15 @@ namespace Kernel.Workitems
         private bool _isFocused;
         private Dictionary<string, Func<object>> Resources;
         private List<IDisposable> Disposables;
+
+        private string LocalStorageKey
+        {
+            get
+            {
+                return WorkItemName.Replace(" ", "");
+            }
+        }
+
 
         /// <summary>
         /// Handle the workitem focus event
@@ -67,6 +77,9 @@ namespace Kernel.Workitems
 
         #region Properties
 
+
+        public IStorage LocalStorage { get; private set; }
+
         protected Project Project { get; private set; }
 
         protected IRegionManagerExtension RegionManager { get; private set; }
@@ -96,6 +109,11 @@ namespace Kernel.Workitems
         /// Specifies if the workitem is opened
         /// </summary>
         public bool IsOpen { get; set; } = false;
+
+        /// <summary>
+        /// If True the workitem will remian focused after a child workitem is opened
+        /// </summary>
+        public virtual bool SupportsMultiFocus { get; } = false;
 
         /// <summary>
         /// The name of the Workitem, for example Product Manager
@@ -168,6 +186,7 @@ namespace Kernel.Workitems
             TaskManager = container.Resolve<ITaskManager>();
             Project = container.Resolve<Project>();
             Configuration.Configure(new ModalOptions());
+            LocalStorage = new LocalStorage(LocalStorageKey, Project);
         }
 
         #endregion
@@ -303,6 +322,11 @@ namespace Kernel.Workitems
         {
             Disposables.Add(disposable);
             return disposable;
+        }
+
+        protected bool HasResource(string name)
+        {
+            return Resources.ContainsKey(name);
         }
 
         /// <summary>

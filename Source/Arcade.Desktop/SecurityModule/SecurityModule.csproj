@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Constants\Commands.cs" />
     <Compile Include="Constants\SecurityCommands.cs" />
+    <Compile Include="Features\Configuration\ConfigurationFeature.cs" />
     <Compile Include="Features\Login\LoginFeature.cs" />
     <Compile Include="Features\Login\Services\IAuthenticationService.cs" />
     <Compile Include="Features\Login\Views\LoginButton.xaml.cs">
@@ -108,21 +109,49 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule.cs" />
+    <Compile Include="Services\ComputersOMService.cs" />
+    <Compile Include="Services\ComputersService.cs" />
+    <Compile Include="Services\ComputerTypesService.cs" />
+    <Compile Include="Services\ComputerTypesOMService.cs" />
     <Compile Include="Services\SystemSettingOMService.cs" />
     <Compile Include="Services\SystemSettingService.cs" />
     <Compile Include="Views\ConfigurationButton.xaml.cs">
       <DependentUpon>ConfigurationButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Workitems\ConfigurationEdit\ConfigurationEditWorkitem.cs" />
-    <Compile Include="Workitems\ConfigurationEdit\Views\ConfigurationEditView.xaml.cs">
+    <Compile Include="Workitems\ArcadeSettings\ArcadeSettingsWorkitem.cs" />
+    <Compile Include="Workitems\ArcadeSettings\Views\ComputersView.xaml.cs">
+      <DependentUpon>ComputersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\ArcadeSettings\Views\ComputersViewModel.cs" />
+    <Compile Include="Workitems\ArcadeSettingsAddEdit\ArcadeSettingsAddEditWorkitem.cs" />
+    <Compile Include="Workitems\ArcadeSettingsAddEdit\Views\EditComputerView.xaml.cs">
+      <DependentUpon>EditComputerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\ArcadeSettingsAddEdit\Views\EditComputerViewModel.cs" />
+    <Compile Include="Workitems\ComputerSettingsAddEdit\ComputerSettingsAddEditWorkitem.cs" />
+    <Compile Include="Workitems\ComputerSettingsAddEdit\Views\EditComputerTypeView.xaml.cs">
+      <DependentUpon>EditComputerTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\ComputerSettingsAddEdit\Views\EditComputerTypeViewModel.cs" />
+    <Compile Include="Workitems\ComputerSettings\ComputerSettingsWorkitem.cs" />
+    <Compile Include="Workitems\ComputerSettings\Views\ComputerTypesView.xaml.cs">
+      <DependentUpon>ComputerTypesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\ComputerSettings\Views\ComputerTypesViewModel.cs" />
+    <Compile Include="Workitems\Configuration\ConfigurationWorkitem.cs" />
+    <Compile Include="Workitems\Configuration\Views\ConfigurationMenu.xaml.cs">
+      <DependentUpon>ConfigurationMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\SystemSettingEdit\SystemSettingEditWorkitem.cs" />
+    <Compile Include="Workitems\SystemSettingEdit\Views\ConfigurationEditView.xaml.cs">
       <DependentUpon>ConfigurationEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Workitems\ConfigurationEdit\Views\ConfigurationEditViewModel.cs" />
-    <Compile Include="Workitems\Configuration\ConfigurationWorkitem.cs" />
-    <Compile Include="Workitems\Configuration\Views\ConfigurationView.xaml.cs">
+    <Compile Include="Workitems\SystemSettingEdit\Views\ConfigurationEditViewModel.cs" />
+    <Compile Include="Workitems\SystemSettings\SystemSettingsWorkitem.cs" />
+    <Compile Include="Workitems\SystemSettings\Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Workitems\Configuration\Views\ConfigurationViewModel.cs" />
+    <Compile Include="Workitems\SystemSettings\Views\ConfigurationViewModel.cs" />
     <Compile Include="Workitems\Login\LoginWorkitem.cs" />
     <Compile Include="Workitems\Login\LoginWorkitemInitializationData.cs" />
     <Compile Include="Workitems\Login\Views\LoginView.xaml.cs">
@@ -143,11 +172,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Workitems\ConfigurationEdit\Views\ConfigurationEditView.xaml">
+    <Page Include="Workitems\ArcadeSettings\Views\ComputersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Workitems\ArcadeSettingsAddEdit\Views\EditComputerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Workitems\ComputerSettingsAddEdit\Views\EditComputerTypeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Workitems\ComputerSettings\Views\ComputerTypesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Workitems\Configuration\Views\ConfigurationMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Workitems\Configuration\Views\ConfigurationView.xaml">
+    <Page Include="Workitems\SystemSettingEdit\Views\ConfigurationEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Workitems\SystemSettings\Views\ConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -178,6 +227,7 @@
       <Name>Kernel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

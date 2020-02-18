@@ -4,12 +4,13 @@ using Infrastructure.Security;
 using Kernel;
 using Kernel.Configuration;
 using SecurityModule.Constants;
+using SecurityModule.Features.Login;
 using SecurityModule.Features.Login.Views;
 using SecurityModule.Workitems.Login;
 using System;
 using System.Threading.Tasks;
 
-namespace SecurityModule.Features.Login
+namespace SecurityModule.Features
 {
     public class LoginFeature : Feature
     {

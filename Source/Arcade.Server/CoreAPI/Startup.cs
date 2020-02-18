@@ -6,14 +6,20 @@ using Common.Faults;
 using Common.Filters;
 using Common.ResponseHandling;
 using DataAccess;
+using DataAccess.Repositories;
 using Facade.Configuration;
 using Facade.Managers;
+using Facade.Repositories;
 using FluentValidation.AspNetCore;
+using LinqToDB.Data;
+using LinqToDB.DataProvider.SqlServer;
+using LinqToDB.Identity;
 using Managers.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,13 +28,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Text;
-using LinqToDB;
-using LinqToDB.Data;
-using LinqToDB.DataProvider.SqlServer;
-using LinqToDB.Identity;
-using Facade.Repositories;
-using DataAccess.Repositories;
-using Microsoft.AspNetCore.Identity;
 
 namespace CoreAPI
 {
@@ -57,6 +56,8 @@ namespace CoreAPI
             services.AddIdentity<User, Role>()
                 .AddLinqToDBStores(new DefaultConnectionFactory())
                 .AddDefaultTokenProviders();
+
+            LinqToDB.Common.Configuration.Linq.AllowMultipleQuery = true;
 
             #region Authentication Configuration
 
@@ -143,7 +144,7 @@ namespace CoreAPI
 
         private void AddManagers(IServiceCollection services)
         {
-            services.AddTransient<IAuthenticationManager, Managers.Implementation.AuthenticationManager>();
+            services.AddTransient<IAuthenticationManager, AuthenticationManager>();
             services.AddTransient<IUserRolesManager, UserRolesManager>();
             services.AddTransient<IImageManager, ImageManager>();
             services.AddTransient<IAssetManager, AssetManager>();
@@ -155,6 +156,13 @@ namespace CoreAPI
             services.AddTransient<IImageRepository, ImageRepository>();
             services.AddTransient<ISystemSettingManager, SystemSettingManager>();
             services.AddTransient<ISystemSettingRepository, SystemSettingRepository>();
+            services.AddTransient<IComputerTypeRepository, ComputerTypeRepository>();
+            services.AddTransient<IComputerTypeManager, ComputerTypeManager>();
+            services.AddTransient<IComputerRepository, ComputerRepository>();
+            services.AddTransient<IComputerManager, ComputerManager>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<ISessionRepository, SessionRepository>();
+            services.AddTransient<ISessionManager, SessionManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SecurityModule.Constants
+﻿namespace SecurityModule.Constants
 {
     public static class Commands
     {
         public const string OpenConfigurationWorkitem = "OpenConfigurationWorkitem";
+        public const string OpenSystemSettingsWorkitem = "OpenSystemSettingsWorkitem";
+        public const string OpenComputerSettingsWorkitem = "OpenComputerSettingsWorkitem";
+        public const string OpenArcadeSettingsWorkitem = "OpenArcadeSettingsWorkitem";
+        
     }
 }

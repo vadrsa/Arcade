@@ -1,16 +1,8 @@
-﻿using GamesModule.Views;
-using GamesModule.Workitems;
-using GamesModule.Workitems.AddEditGame;
+﻿using GamesModule.Workitems.AddEditGame;
 using GamesModule.Workitems.GameManager;
 using GamesModule.Workitems.GamesDisplay;
-using Infrastructure.Constants;
-using Infrastructure.Mvvm;
 using Infrastructure.Prism;
-using Infrastructure.Security;
-using Kernel;
 using Prism.Ioc;
-using System;
-using System.Threading.Tasks;
 
 namespace Modules
 {
@@ -21,10 +13,6 @@ namespace Modules
             base.OnInitialized(containerProvider);
             // hadck to create referance
             new Arcade.CustomControls.FaultedPage();
-            RegionManager.AddToRegion(KnownRegions.MainMenu, new GamesDisplayButton());
-            RegionManager.AddToRegion(KnownRegions.MainMenu, new GameManagerButton());
-            CommandManager.RegisterCommand(global::GamesModule.Constants.Commands.OpenGamesWorkitem, new AsyncCommand(OpenGamesWorkitem));
-            CommandManager.RegisterCommand(global::GamesModule.Constants.Commands.OpenGameManagerWorkitem, new SecureAsyncCommand(OpenGameManagerWorkietm));
         }
 
         public override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -35,14 +23,6 @@ namespace Modules
             containerRegistry.Register<GameManagerWorkitem>();
         }
 
-        private async Task OpenGamesWorkitem()
-        {
-            await CurrentContextService.LaunchWorkItem<GamesDisplayWorkitem>();
-        }
 
-        private async Task OpenGameManagerWorkietm()
-        {
-            await CurrentContextService.LaunchWorkItem<GameManagerWorkitem>();
-        }
     }
 }

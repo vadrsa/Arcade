@@ -5,5 +5,7 @@
         public const string Content = "ContentRegion";
         public const string Ribbon = "RibbonRegion";
         public const string MainMenu = "MainMenuRegion";
+        public const string SecondaryMenu = "SecondaryMenuRegion";
+        
     }
 }

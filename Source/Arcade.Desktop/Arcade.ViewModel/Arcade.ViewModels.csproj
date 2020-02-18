@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -56,9 +59,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ComputerProfile.cs" />
+    <Compile Include="Configuration\ComputerTypeProfile.cs" />
+    <Compile Include="Configuration\EmployeeProfile.cs" />
+    <Compile Include="Configuration\GamesProfile.cs" />
+    <Compile Include="Configuration\SessionProfile.cs" />
+    <Compile Include="Configuration\SystemSettingProfile.cs" />
+    <Compile Include="SessionViewModel.cs" />
+    <Compile Include="ComputerSessionViewModel.cs" />
+    <Compile Include="ComputerViewModel.cs" />
     <Compile Include="EmployeeViewModel.cs" />
     <Compile Include="GameDetailsViewModel.cs" />
     <Compile Include="GameUploadViewModel.cs" />
+    <Compile Include="ComputerTypeViewModel.cs" />
     <Compile Include="GameViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemSettingViewModel.cs" />

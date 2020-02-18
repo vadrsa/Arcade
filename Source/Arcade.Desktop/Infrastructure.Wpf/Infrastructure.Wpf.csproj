@@ -146,6 +146,8 @@
     <Compile Include="Mvvm\InverseBooleanConverter.cs" />
     <Compile Include="Mvvm\ObjectVisibilityConverter.cs" />
     <Compile Include="Mvvm\ObjectWidthConverter.cs" />
+    <Compile Include="Mvvm\SetterAction.cs" />
+    <Compile Include="Mvvm\UtcToLocalConverter.cs" />
     <Compile Include="ObjectManagement\IObjectManagementService.cs" />
     <Compile Include="ObjectManagement\IObjectManagerWorkitem.cs" />
     <Compile Include="ObjectManagement\ObjectManagerDetailsInitializer.cs" />
@@ -175,9 +177,11 @@
     <Compile Include="Utils\PrismHelper.cs" />
     <Compile Include="Mvvm\ISupportsListManipulation.cs" />
     <Compile Include="Mvvm\WorkitemViewModel.cs" />
+    <Compile Include="Utils\Printing.cs" />
     <Compile Include="Workitems\WorkitemWpfBase.cs" />
     <Compile Include="Prism\Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WPF\CollectionProperties.cs" />
     <Compile Include="WPF\CustomImageExtension.cs" />
     <Compile Include="WPF\EnumItemSourceExtension.cs" />
     <Compile Include="WPF\IHasVisibility.cs" />

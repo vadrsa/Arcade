@@ -1,6 +1,7 @@
 ﻿using Arcade.ViewModels;
 using Infrastructure.ObjectManagement;
 using Prism.Ioc;
+using StaffModule.Workitems.SessionManagerDetails;
 using StaffModule.Workitems.StaffAddEdit;
 using StaffModule.Workitems.StaffManager.Views;
 using System;
@@ -18,5 +19,7 @@ namespace StaffModule.Workitems.StaffManager
         }
 
         public override string WorkItemName => "Staff";
+
+        
     }
 }

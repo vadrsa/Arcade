@@ -16,7 +16,6 @@ namespace Infrastructure.ObjectManagement
         protected IContainerProvider ContainerProvider => Workitem.Container;
         protected abstract IObjectManagementService<TList, TDetails, K> ObjectManagementService { get; }
 
-
         private FilteredObservableCollection<TList> items;
         public FilteredObservableCollection<TList> List
         {
@@ -52,7 +51,7 @@ namespace Infrastructure.ObjectManagement
             return !DeleteCommand.IsExecuting(id);
         }
 
-        private async Task Edit(K id)
+        protected virtual async Task Edit(K id)
         {
             var item = await LoadCustom<TDetails>((t) => GetForUpload(id, t));
             if (item == null) return;
@@ -60,7 +59,7 @@ namespace Infrastructure.ObjectManagement
             (await Workitem.RunAddEdit(item, false)).Subscribe(this);
         }
 
-        private async Task<TDetails> GetForUpload(K id, CancellationToken token)
+        protected async Task<TDetails> GetForUpload(K id, CancellationToken token)
         {
             return await ObjectManagementService.GetForUploadByID(id, token);
         }
@@ -78,7 +77,7 @@ namespace Infrastructure.ObjectManagement
             }
         }
 
-        private async Task DoDelete(K id)
+        protected virtual async Task DoDelete(K id)
         {
             EditCommand.RaiseCanExecuteChanged();
             try
@@ -107,7 +106,7 @@ namespace Infrastructure.ObjectManagement
             }
         }
 
-        private async Task Add()
+        protected virtual async Task Add()
         {
             (await Workitem.RunAddEdit(Activator.CreateInstance<TDetails>(), true)).Subscribe(this);
 

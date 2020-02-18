@@ -114,7 +114,7 @@ namespace Kernel.Workitems
             if (Project.IsConfigured<WorkitemBehaviorOptions>())
             {
                 WorkitemBehaviorOptions options = Project.GetOption<WorkitemBehaviorOptions>();
-                if (!await options.Behaviour.OnLaunching(this, new Behaviors.WorkitemLaunchDescriptor(type, parent == null, isModal)))
+                if (!await options.Behaviour.OnLaunching(this, new Behaviors.WorkitemLaunchDescriptor(type, parent == null, isModal, parent)))
                     return null;
                 
             }

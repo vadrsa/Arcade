@@ -37,7 +37,6 @@ namespace Common.ResponseHandling
         {
             try
             {
-
                 Type type = exception.GetType();
                 context.Response.ContentType = "application/json";
                 FaultType faultType;

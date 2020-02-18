@@ -13,7 +13,7 @@ namespace Kernel.Prism
     {
 
         public readonly bool IsDebug;
-        readonly Project project;
+        protected readonly Project project;
 
         public PrismApplication(Project project)
         {

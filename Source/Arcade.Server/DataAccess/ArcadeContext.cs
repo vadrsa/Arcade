@@ -54,5 +54,11 @@ namespace DataAccess
         public ITable<Game> Games => GetTable<Game>();
         public ITable<Image> Images => GetTable<Image>();
         public ITable<SystemSetting> SystemSettings => GetTable<SystemSetting>();
+        public ITable<ComputerType> ComputerTypes => GetTable<ComputerType>();
+        public ITable<Computer> Computers => GetTable<Computer>();
+        public ITable<Payment> Payments => GetTable<Payment>();
+        public ITable<Session> Sessions => GetTable<Session>();
+        public ITable<QueueNumberStorage> QueueNumberStorage => GetTable<QueueNumberStorage>();
+        
     }
 }

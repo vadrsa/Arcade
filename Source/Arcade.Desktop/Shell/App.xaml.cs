@@ -1,5 +1,6 @@
 ﻿using Arcade;
 using Arcade.Configuration;
+using Arcade.Views;
 using AutoMapper;
 using Infrastructure.Constants;
 using Infrastructure.Prism;
@@ -19,57 +20,11 @@ namespace Shell
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : PrismApplication
+    public partial class App : ArcadeWpfApplication
     {
-        public App() : base(new ArcadeProject())
+        public App() : base(new ArcadeQueueProject())
         {
         }
 
-        protected override Window CreateShell()
-        {
-            return new MainWindow();
-        }
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            CommandManager.RegisterCommand(KnownCommands.CloseAllTabs, CloseAllTabs);
-            CommandManager.RegisterCommand(KnownCommands.Exit, Application.Current.MainWindow.Close);
-        }
-
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
-        {
-            base.ConfigureModuleCatalog(moduleCatalog);
-            moduleCatalog.AddModule<Modules.SecurityModule>();
-            moduleCatalog.AddModule<Modules.GamesModule>();
-            moduleCatalog.AddModule<Modules.StaffModule>();
-        }
-
-        protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings mappings)
-        {
-            base.ConfigureRegionAdapterMappings(mappings);
-            var factory = Container.Resolve<IRegionBehaviorFactory>();
-            mappings.RegisterMapping(typeof(WrapPanel), new PanelHostRegionAdapter<WrapPanel>(factory));
-        }
-
-        protected override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            base.RegisterTypes(containerRegistry);
-            var configuration = new MapperConfiguration(cfg => cfg.AddMaps(Assembly.GetAssembly(typeof(GamesProfile))));
-            configuration.AssertConfigurationIsValid();
-            containerRegistry.RegisterInstance<IMapper>(configuration.CreateMapper());
-        }
-
-        protected override void ConfigureViewModelLocator()
-        {
-            base.ConfigureViewModelLocator();
-            PrismHelper.SetCustomViewTypeToViewModelTypeResolver();
-        }
-
-        private void CloseAllTabs()
-        {
-            IContextService contextService = Container.Resolve<IContextService>();
-            contextService.CloseAllWorkitems();
-        }
     }
 }

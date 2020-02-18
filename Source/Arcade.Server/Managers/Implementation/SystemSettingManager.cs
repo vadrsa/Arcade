@@ -31,7 +31,7 @@ namespace Managers.Implementation
             }
             catch(Exception ex)
             {
-                throw new FaultException(FaultType.BadRequest, $"Setting was in incorrect format. couldn't cast to {settingSystemType.Name}");
+                throw new FaultException(FaultType.BadRequest, $"Setting value was in an incorrect format. Couldn't cast to {settingSystemType.Name}");
             }
             var setting = new BusinessEntities.SystemSetting {
                 Id = (int)settingDto.Setting,

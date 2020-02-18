@@ -47,7 +47,7 @@ namespace Kernel.Workitems.Strategies.Focus
             else if (workItem.IsModal)
                 return new ModalWorkitemFocusStrategy(currentContextService, workItem);
             else if (workItem.Parent != null)
-                return new RootWorkitemFocusStrategy(currentContextService, workItem);
+                return new ChildWorkitemFocusStrategy(currentContextService, workItem);
             else
                 return new RootWorkitemFocusStrategy(currentContextService, workItem);
         }

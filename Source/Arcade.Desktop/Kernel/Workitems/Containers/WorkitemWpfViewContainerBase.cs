@@ -29,26 +29,30 @@ namespace Kernel.Workitems
             if (view is FrameworkElement)
             {
                 object viewModel = ((FrameworkElement)view).DataContext;
-                var interfaceImplType = viewModel.GetType().GetGenericInterface(typeof(IWorkitemAware<>));
-                if (interfaceImplType != null)
+                if (viewModel != null)
                 {
-                    var initType = interfaceImplType.GetGenericArguments()[0];
-
-                    // initialize
-                    if (initType.IsAssignableFrom(WorkItem.GetType()))
+                    var interfaceImplType = viewModel.GetType().GetGenericInterface(typeof(IWorkitemAware<>));
+                    if (interfaceImplType != null)
                     {
-                        var methodInfo = viewModel.GetType().GetMethod("SetWorkitem", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-                        methodInfo.Invoke(viewModel, new object[] { WorkItem });
+                        var initType = interfaceImplType.GetGenericArguments()[0];
+
+                        // initialize
+                        if (initType.IsAssignableFrom(WorkItem.GetType()))
+                        {
+                            var methodInfo = viewModel.GetType().GetMethod("SetWorkitem", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                            methodInfo.Invoke(viewModel, new object[] { WorkItem });
+                        }
+                        else
+                            throw new ArgumentException($"Workitem supports initialization only by {initType}");
                     }
-                    else
-                        throw new ArgumentException($"Workitem supports initialization only by {initType}");
+
+                    if (viewModel is IDisposable)
+                        Disposable((IDisposable)viewModel);
                 }
 
                 if (view is IDisposable)
                     Disposable((IDisposable)view);
 
-                if (viewModel is IDisposable)
-                    Disposable((IDisposable)viewModel);
 
             }
             return view;
