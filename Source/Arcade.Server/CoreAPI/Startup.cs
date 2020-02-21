@@ -11,6 +11,7 @@ using Facade.Configuration;
 using Facade.Managers;
 using Facade.Repositories;
 using FluentValidation.AspNetCore;
+using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider.SqlServer;
 using LinqToDB.Identity;
@@ -129,6 +130,7 @@ namespace CoreAPI
                 options.Cookie.IsEssential = true;
             });
             services.AddScoped<ArcadeContext>();
+            
             //var mapperConfiguration =  new MapperConfiguration(conf => conf.AddMaps(Assembly.GetAssembly(typeof(ProfileLocator))));
             //services.AddSingleton<AutoMapper.IConfigurationProvider>(mapperConfiguration);
             //services.AddSingleton<IMapper>(mapperConfiguration.CreateMapper());
@@ -139,7 +141,26 @@ namespace CoreAPI
 
             GlobalOptions globalOptions = globalOptionsSection.Get<GlobalOptions>();
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddSingleton<ServiceProvider>(services.BuildServiceProvider());
+            var sp = services.BuildServiceProvider();
+            services.AddSingleton<ServiceProvider>(sp);
+            var context = sp.GetService<ArcadeContext>();
+            //context.CreateTable< LinqToDB.Identity.IdentityUserRole<string>>();
+            //context.CreateTable< LinqToDB.Identity.IdentityRoleClaim<string>>();
+            //context.CreateTable< LinqToDB.Identity.IdentityUserToken<string>>();
+            //context.CreateTable< LinqToDB.Identity.IdentityUserLogin<string>>();
+            //context.CreateTable< LinqToDB.Identity.IdentityUserClaim<string>>();
+            //context.CreateTable<User>();
+            //context.CreateTable<Role>();
+            //context.CreateTable<Game>();
+            //context.CreateTable<Fault>();
+            //context.CreateTable<Image>();
+            //context.CreateTable<Payment>();
+            //context.CreateTable<QueueNumberStorage>();
+            //context.CreateTable<SystemSetting>();
+            //context.CreateTable<Employee>();
+            //context.CreateTable<Computer>();
+            //context.CreateTable<ComputerType>();
+            //context.CreateTable<Session>();
         }
 
         private void AddManagers(IServiceCollection services)

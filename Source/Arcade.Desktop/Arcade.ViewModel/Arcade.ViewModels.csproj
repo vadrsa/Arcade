@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComputerIncomeViewModel.cs" />
     <Compile Include="Configuration\ComputerProfile.cs" />
     <Compile Include="Configuration\ComputerTypeProfile.cs" />
     <Compile Include="Configuration\EmployeeProfile.cs" />

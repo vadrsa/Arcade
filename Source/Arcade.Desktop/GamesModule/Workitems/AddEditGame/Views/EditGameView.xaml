@@ -31,7 +31,7 @@
                    Visibility="{Binding IsLoadingFaulted, Converter={StaticResource booleabVisibilityConverter}}" 
                    Text="{Binding LoadingErrorMessage}" TextWrapping="Wrap" />
         <StackPanel Grid.Row="3" Margin="50 0 50 30">
-            <Image Source="{Binding Details.ImagePath}" MinWidth="250" MinHeight="100">
+            <Image Source="{Binding Details.ImagePath}" MaxHeight="300" MinWidth="250" MinHeight="100">
             </Image>
             <Button Margin="0 -40 -150 0" kernel:CommandManager.CommandName="{x:Static const:Commands.BrowseImage}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}">Browse</Button>
             <Label Margin="0 10 0 0" Content="Name" />
