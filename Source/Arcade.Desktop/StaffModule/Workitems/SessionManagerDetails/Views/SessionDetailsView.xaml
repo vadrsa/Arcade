@@ -64,6 +64,14 @@
             <TextBox x:Name="Duration" IsReadOnly="True" Text="{Binding Details.Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Margin="0 10 0 0" Content="Pyament Due" MinWidth="250"/>
             <TextBox Text="{Binding Details.PaymentDue, Mode=OneWay}" IsReadOnly="True"/>
+            <Label Margin="0 10 0 0" Content="Game" MinWidth="250"/>
+            <ComboBox  DisplayMemberPath="Name" 
+                SelectedValue="{Binding Details.Game}"
+                ItemsSource="{Binding DataContext.Games, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                md:HintAssist.Hint="Game" 
+                    IsEditable="True" 
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+            </ComboBox>
         </StackPanel>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 30 20">
             <Button Width="200"  Style="{DynamicResource MaterialDesignFlatButton}" kernel:CommandManager.CommandName="{x:Static infConst:Commands.SaveObject}" Content="Payment Received" />

@@ -1,4 +1,5 @@
-﻿using Infrastructure.Constants;
+﻿using Infrastructure.Api;
+using Infrastructure.Constants;
 using Infrastructure.Mvvm;
 using Infrastructure.Security;
 using Kernel;
@@ -47,7 +48,14 @@ namespace SecurityModule.Features
 
             if (AppSecurityContext.CurrentPrincipal.Identity.IsAuthenticated)
             {
-                await _authenticationServiceResolver.Invoke().LogoutAsync();
+                try
+                {
+                    await _authenticationServiceResolver.Invoke().LogoutAsync();
+                }
+                catch (Exception e)
+                {
+
+                }
             }
             else
             {

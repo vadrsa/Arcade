@@ -70,27 +70,12 @@ namespace Managers.Implementation
             return dto;
         }
 
+        [Transaction]
         public async Task RemoveAsync(string id, CancellationToken token = default)
         {
-            var transaction = ServiceProvider.GetService<ArcadeContext>().BeginTransaction(System.Data.IsolationLevel.Serializable);
-            try
-            {
-                var employee = await ServiceProvider.GetService<IEmployeeRepository>().LoadWith(p => p.User).FindByIDAsync(id, token);
-
-                await ServiceProvider.GetService<IEmployeeRepository>().RemoveAsync(employee, token);
-                await ServiceProvider.GetService<IAuthenticationManager>().RemoveAsync(employee.Id);
-                transaction.Commit();
-            }
-            catch(Exception ex)
-            {
-                transaction.Rollback();
-                throw ex;
-            }
-            finally
-            {
-                transaction.Dispose();
-            }
-
+            var employee = await ServiceProvider.GetService<IEmployeeRepository>().LoadWith(p => p.User).FindByIDAsync(id, token);
+            employee.IsTerminated = !employee.IsTerminated;
+            await ServiceProvider.GetService<IEmployeeRepository>().UpdateAsync(employee, token);
         }
 
         [Transaction]

@@ -16,7 +16,7 @@ namespace SecurityModule.Features
             base.Attach();
 
             RegionManager.AddToRegion(KnownRegions.MainMenu, new ConfigurationButton());
-            CommandManager.RegisterCommand(global::SecurityModule.Constants.Commands.OpenConfigurationWorkitem, new SecureAsyncCommand(OpenConfigurationWorkitem));
+            CommandManager.RegisterCommand(global::SecurityModule.Constants.Commands.OpenConfigurationWorkitem, new SecureAsyncCommand(OpenConfigurationWorkitem, SharedEntities.ApplicationRole.Admin));
 
         }
 

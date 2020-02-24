@@ -18,18 +18,21 @@ namespace CoreAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<SystemSettingDto>> Get()
         {
             return await ServiceProvider.GetService<ISystemSettingManager>().GetAllSettings();
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<SystemSettingDto> GetByType(int id)
         {
             return await ServiceProvider.GetService<ISystemSettingManager>().GetSetting(id);
         }
 
         [HttpPut]
+        [Authorize(ApplicationRole.Admin)]
         public async Task Put([FromBody] SystemSettingDto setting)
         {
             await ServiceProvider.GetService<ISystemSettingManager>().SetSetting(setting);

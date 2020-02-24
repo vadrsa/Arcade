@@ -14,12 +14,14 @@ namespace Arcade.Configuration
             this.CreateMap<EmployeeViewModel, EmployeeDto>()
                 .ForMember(p => p.UserId, o => o.MapFrom(d => d.Id));
             this.CreateMap<EmployeeUploadDto, EmployeeViewModel>()
-                .ForMember(p => p.Id, o => o.MapFrom(d => d.UserId));
+                .ForMember(p => p.Id, o => o.MapFrom(d => d.UserId))
+                .ForMember(p => p.IsTerminated, o => o.Ignore());
             this.CreateMap<EmployeeViewModel, EmployeeUploadDto>()
                 .ForMember(p => p.Password, o => o.Ignore())
                 .ForMember(p => p.UserId, o => o.MapFrom(d => d.Id));
             this.CreateMap<EmployeeUploadViewModel, EmployeeDto>()
-                .ForMember(p => p.UserId, o => o.MapFrom(d => d.Id));
+                .ForMember(p => p.UserId, o => o.MapFrom(d => d.Id))
+                .ForMember(p => p.IsTerminated, o => o.Ignore());
             this.CreateMap<EmployeeDto, EmployeeUploadViewModel>()
                 .ForMember(p => p.Password, o => o.Ignore())
                 .ForMember(p => p.Id, o => o.MapFrom(d => d.UserId));

@@ -45,6 +45,18 @@
 
             <Label Margin="0 10 0 0" Content="Password" MinWidth="250"/>
             <TextBox Text="{Binding Details.Password}"  IsEnabled="{Binding IsAdding}"/>
+            <!--<Label Margin="0 10 0 0" Content="RFID Card" MinWidth="250"/>
+            <Grid>
+                <md:PackIcon Kind="CardBulletedSettings" VerticalAlignment="Center"/>
+                <TextBox Padding="10 0 0 0" IsReadOnly="true" Text="Encrypted" IsEnabled="{Binding IsAdding}">
+                </TextBox>
+            </Grid>
+            <Label Margin="0 10 0 0" Content="Fingerprint" MinWidth="250"/>
+            <Grid>
+                <md:PackIcon Kind="Fingerprint" VerticalAlignment="Center"/>
+                <TextBox Padding="10 0 0 0" IsReadOnly="true" Text="Encrypted" IsEnabled="{Binding IsAdding}">
+                </TextBox>
+            </Grid>-->
             <ComboBox
                 DisplayMemberPath="Description" 
                 SelectedValue="{Binding Details.Role}"

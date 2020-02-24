@@ -5,25 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SecurityModule.Views"
              Background="White"
-             BorderThickness="3"
-             BorderBrush="Black"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="200" d:DesignWidth="200">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="0" Grid.Row="0"  Source="pack://application:,,,/Views/Logo.jpg" />
-        <TextBlock Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" FontFamily="Arial" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="{Binding QueueNumber}"></TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" FontFamily="Arial"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="{Binding Computer}"></TextBlock>
+        <Image Grid.Column="0" Grid.Row="0" Source="Logo.jpg" />
+        <TextBlock Grid.Column="1" Grid.Row="1"  FontFamily="Arial" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="{Binding QueueNumber, FallbackValue=123}"></TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="2" FontSize="10"  FontFamily="Arial"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="{Binding Game, FallbackValue='Name of the Game'}"></TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="3"  FontFamily="Arial"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="{Binding Computer, FallbackValue=Playstation #2}"></TextBlock>
     </Grid>
 </UserControl>

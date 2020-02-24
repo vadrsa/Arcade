@@ -51,6 +51,13 @@ namespace Arcade.ViewModels
                 return Math.Ceiling(res * 100) / 100;
             }
         }
+
+        private GameViewModel _game;
+        public GameViewModel Game
+        {
+            get => _game;
+            set => Set(nameof(Game), ref _game, value);
+        }
     }
 
     public class SessionViewModel : EditableViewModel<SessionUploadViewModel>

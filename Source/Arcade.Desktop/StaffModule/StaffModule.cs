@@ -3,6 +3,7 @@ using Infrastructure.Prism;
 using Infrastructure.Security;
 using Kernel;
 using Prism.Ioc;
+using Prism.Regions;
 using SharedEntities;
 using StaffModule.Views;
 using StaffModule.Workitems.SessionManager;
@@ -20,6 +21,7 @@ namespace Modules
 
             new Arcade.CustomControls.FaultedPage();
         }
+
 
 
     }

@@ -22,40 +22,42 @@ namespace CoreAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<GameDto>> Get()
         {
             return await ServiceProvider.GetService<IGameManager>().GetAll();
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<GameDetailsDto> GetById(string id)
         {
             return await ServiceProvider.GetService<IGameManager>().GetById(id);
         }
 
         [HttpGet("forupload/{id}")]
-        [Authorize]
+        [Authorize(ApplicationRole.Admin)]
         public async Task<GameUploadDto> GetForUplaod(string id)
         {
             return await ServiceProvider.GetService<IGameManager>().GetForUpload(id);
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(ApplicationRole.Admin)]
         public async Task<GameDto> Post([FromBody] GameUploadDto game)
         {
             return await ServiceProvider.GetService<IGameManager>().AddAsync(game);
         }
 
         [HttpPut]
-        [Authorize]
+        [Authorize(ApplicationRole.Admin)]
         public async Task Put([FromBody] GameUploadDto game)
         {
             await ServiceProvider.GetService<IGameManager>().UpdateAsync(game);
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(ApplicationRole.Admin)]
         public async Task Delete(string id)
         {
             await ServiceProvider.GetService<IGameManager>().RemoveAsync(id);

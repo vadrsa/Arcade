@@ -18,33 +18,35 @@ namespace CoreAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<ComputerDto>> Get()
         {
             return await ServiceProvider.GetService<IComputerManager>().GetAll();
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ComputerDto> GetById(string id)
         {
             return await ServiceProvider.GetService<IComputerManager>().GetById(id);
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(ApplicationRole.Admin)]
         public async Task<ComputerDto> Post([FromBody] ComputerDto computer)
         {
             return await ServiceProvider.GetService<IComputerManager>().AddAsync(computer);
         }
 
         [HttpPut]
-        [Authorize]
+        [Authorize(ApplicationRole.Admin)]
         public async Task Put([FromBody] ComputerDto computer)
         {
             await ServiceProvider.GetService<IComputerManager>().UpdateAsync(computer);
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(ApplicationRole.Admin)]
         public async Task Delete(string id)
         {
             await ServiceProvider.GetService<IComputerManager>().RemoveAsync(id);

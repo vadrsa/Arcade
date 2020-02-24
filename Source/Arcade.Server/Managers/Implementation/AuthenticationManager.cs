@@ -28,15 +28,18 @@ namespace Managers.Implementation
         private readonly ArcadeContext _context;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly IEmployeeManager _employeeManager;
         private readonly IConfiguration _configuration;
 
         public AuthenticationManager(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
+            IEmployeeManager employeeManager,
             ArcadeContext context,
             IConfiguration configuration
             )
         {
+            _employeeManager = employeeManager;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
@@ -45,11 +48,24 @@ namespace Managers.Implementation
 
         public async Task<UserDto> LoginAsync(LoginDto model)
         {
+            var appUser = _userManager.Users.SingleOrDefault(r => r.UserName == model.Username);
+            EmployeeDto employee = null;
+            try
+            {
+                employee = await _employeeManager.GetById(appUser.Id);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            if (employee != null && employee.IsTerminated)
+                throw new FaultException(FaultType.InvalidCredentials, "Your account has been suspended");
+
             var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
 
             if (result.Succeeded)
             {
-                var appUser = _userManager.Users.SingleOrDefault(r => r.UserName == model.Username);
                 List<string> roles = (await _userManager.GetRolesAsync(appUser)).ToList();
                 return new UserDto { UserName = appUser.UserName, Token = GenerateJwtToken(appUser, roles).ToString(), Roles = roles };
             }

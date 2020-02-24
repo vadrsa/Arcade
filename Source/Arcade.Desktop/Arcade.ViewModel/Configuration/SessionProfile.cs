@@ -14,6 +14,7 @@ namespace Arcade.Configuration
         {
             this.CreateMap<SessionUploadViewModel, SessionUploadDto>();
             this.CreateMap<SessionUploadDto, SessionUploadViewModel>()
+                .ForMember(p => p.Game, o => o.Ignore())
                 .ForMember(p => p.Type, o => o.Ignore());
 
             this.CreateMap<SessionDto, SessionViewModel>();

@@ -154,10 +154,6 @@
       <Project>{516F8439-92F3-45D6-A3FA-2845E360048A}</Project>
       <Name>SharedEntities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AnaliticsModule\AnaliticsModule.csproj">
-      <Project>{ee1fbc64-94b7-45eb-9188-23ea2dcaa067}</Project>
-      <Name>AnaliticsModule</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Arcade.ViewModel\Arcade.ViewModels.csproj">
       <Project>{7F754255-84AD-4659-ADCF-50910781ACAA}</Project>
       <Name>Arcade.ViewModels</Name>

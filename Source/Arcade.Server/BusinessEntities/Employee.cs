@@ -11,6 +11,8 @@ namespace BusinessEntities
         public string FirstName { get; set; }
         [Column]
         public string LastName { get; set; }
+        [Column]
+        public bool IsTerminated { get; set; }
 
         [Association(ThisKey = nameof(Id), OtherKey = nameof(Id))]
         public User User { get; set; }

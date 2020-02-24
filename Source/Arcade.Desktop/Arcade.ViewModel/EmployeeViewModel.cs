@@ -42,6 +42,13 @@ namespace Arcade.ViewModels
             set => Set(ref _lastname, value, nameof(LastName));
         }
 
+        private bool _isTerminated;
+        public bool IsTerminated
+        {
+            get => _isTerminated;
+            set => Set(ref _isTerminated, value, nameof(_isTerminated));
+        }
+
     }
 
     public class EmployeeUploadViewModel : EditableViewModel<EmployeeUploadViewModel>, IIdEntityViewModel<string>

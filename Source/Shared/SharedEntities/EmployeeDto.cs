@@ -10,6 +10,7 @@ namespace SharedEntities
         public ApplicationRole Role { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public bool IsTerminated { get; set; }
     }
 
     public class EmployeeUploadDto

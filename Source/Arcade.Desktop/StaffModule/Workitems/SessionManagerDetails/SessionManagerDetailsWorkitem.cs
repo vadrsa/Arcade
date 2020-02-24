@@ -123,7 +123,7 @@ namespace StaffModule.Workitems.SessionManagerDetails
                 }
 
                 var check = new QueueCheck();
-                check.DataContext = new QueueCheckViewModel { Computer = computer.ComputerFullName, QueueNumber = session.QueueNumber };
+                check.DataContext = new QueueCheckViewModel { Computer = computer.ComputerFullName, QueueNumber = session.QueueNumber, Game = ViewModel.Details?.Game?.Name };
                 check.Print(size);
 
             }

@@ -1,11 +1,8 @@
 ﻿using Arcade.ViewModels;
 using Infrastructure.ObjectManagement;
 using Prism.Ioc;
-using SharedEntities;
 using StaffModule.Services;
 using StaffModule.Workitems.StaffAddEdit.Views;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace StaffModule.Workitems.StaffAddEdit
 {

@@ -15,7 +15,7 @@ namespace Modules
         public override void OnInitialized(IContainerProvider containerProvider)
         {
             base.OnInitialized(containerProvider);
-            CurrentContextService.LaunchModalWorkItem<ComputerIncomeWorkitem>();
+            //CurrentContextService.LaunchModalWorkItem<ComputerIncomeWorkitem>();
         }
     }
 }

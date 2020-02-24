@@ -7,6 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:mvvm="clr-namespace:Infrastructure.Mvvm;assembly=Infrastructure.Wpf" 
              xmlns:controls="clr-namespace:Arcade.CustomControls;assembly=Arcade.CustomControls" 
+             xmlns:vws="clr-namespace:StaffModule.Views" 
              xmlns:prism="http://prismlibrary.com/"
             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 

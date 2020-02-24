@@ -50,7 +50,10 @@
                                             Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding Id}"
                                         HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                        <materialDesign:PackIcon Kind="Delete" />
+                                        <StackPanel>
+                                            <materialDesign:PackIcon Kind="Restore" Visibility="{Binding IsTerminated, Converter={StaticResource visibilityConverter}}"/>
+                                            <materialDesign:PackIcon Kind="Delete" Visibility="{Binding  IsTerminated, Converter={StaticResource visibilityConverter}, ConverterParameter=True}"/>
+                                        </StackPanel>
                                     </Button>
                                     <Button  Grid.Column="4" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
                                             Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"

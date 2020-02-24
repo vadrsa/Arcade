@@ -15,7 +15,7 @@ namespace GamesModule.Features
         {
             base.Attach();
             RegionManager.AddToRegion(KnownRegions.MainMenu, new GameManagerButton());
-            CommandManager.RegisterCommand(global::GamesModule.Constants.Commands.OpenGameManagerWorkitem, new SecureAsyncCommand(OpenGameManagerWorkietm));
+            CommandManager.RegisterCommand(global::GamesModule.Constants.Commands.OpenGameManagerWorkitem, new SecureAsyncCommand(OpenGameManagerWorkietm, SharedEntities.ApplicationRole.Admin));
         }
 
         private async Task OpenGameManagerWorkietm()

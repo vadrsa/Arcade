@@ -18,18 +18,21 @@ namespace CoreAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<ComputerQueueDto>> Get()
         {
             return await ServiceProvider.GetService<ISessionManager>().GetAllComputers();
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ComputerQueueDto> GetById(string id)
         {
             return await ServiceProvider.GetService<ISessionManager>().GetComputerById(id);
         }
 
         [HttpGet("{id}/endsession")]
+        [Authorize]
         public async Task EndSession(string id)
         {
             await ServiceProvider.GetService<ISessionManager>().EndSession(id);
@@ -41,15 +44,15 @@ namespace CoreAPI.Controllers
             return await ServiceProvider.GetService<ISessionManager>().GetFullComputerById(id);
         }
 
-
-
         [HttpPut("create")]
+        [Authorize]
         public async Task<SessionDto> Create([FromBody] SessionUploadDto session)
         {
             return await ServiceProvider.GetService<ISessionManager>().Create(session);
         }
 
         [HttpPut("enqueue")]
+        [Authorize]
         public async Task<SessionDto> Enqueue([FromBody] SessionUploadDto session)
         {
             return await ServiceProvider.GetService<ISessionManager>().AddToQueue(session);
