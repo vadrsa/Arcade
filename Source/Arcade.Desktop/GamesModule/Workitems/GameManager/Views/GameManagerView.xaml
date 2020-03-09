@@ -22,7 +22,7 @@
                 <Button Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Command="{Binding AddCommand}" Margin="20" HorizontalAlignment="Left">
                     <materialDesign:PackIcon Kind="Add" Height="24" Width="24" />
                 </Button>
-
+    
                 <ItemsControl ItemsSource="{Binding List}" Margin="20">
                     <ItemsControl.Template>
                         <ControlTemplate>
