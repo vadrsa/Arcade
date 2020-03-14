@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <mvvm:BooleanToVisibilityConverter x:Key="visibilityConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
@@ -37,19 +37,27 @@
             </ItemsControl>
         </Border>
         <ListView Grid.Row="1" x:Name="MyListView" ItemsSource="{Binding Games}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate >
+                    <WrapPanel MaxWidth="1200" Orientation="Horizontal" HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ContentControl >
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <prism:InvokeCommandAction Command="{Binding DataContext.OpenGameCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Id}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <StackPanel>
-                            <Image MaxHeight="150" IsEnabled="False" Source="{Binding Image}"/>
-                            <TextBlock  Text="{Binding Name}" Margin="5,0,0,0" />
-                        </StackPanel>
-                    </ContentControl>
+                    <StackPanel Orientation="Horizontal">
+                        <ContentControl >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <prism:InvokeCommandAction Command="{Binding DataContext.OpenGameCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Id}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                            <StackPanel Background="Black">
+                                <Image Height="200" IsEnabled="False" Width="350" Source="{Binding Image}"/>
+                                <TextBlock TextAlignment="Center" FontSize="20" Text="{Binding Name}"  Foreground="White" Margin="5,0,0,0" />
+                            </StackPanel>
+                        </ContentControl>
+                    </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
