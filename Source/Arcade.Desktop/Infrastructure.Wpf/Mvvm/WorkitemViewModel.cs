@@ -66,6 +66,22 @@ namespace Infrastructure.Mvvm
             }
         }
 
+        private AsyncCommand _closeCommand;
+        public AsyncCommand CloseCommand
+        {
+            get
+            {
+                if (_closeCommand == null)
+                    _closeCommand = new AsyncCommand(Close);
+                return _closeCommand;
+            }
+        }
+
+        protected async Task Close()
+        {
+            await Workitem.Close();
+        }
+
         public async void Load()
         {
             await LoadCustom(DoLoad);
