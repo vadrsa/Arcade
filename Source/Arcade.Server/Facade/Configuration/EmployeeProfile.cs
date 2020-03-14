@@ -26,6 +26,9 @@ namespace Facade.Configuration
                 .ForMember(p => p.Role, d => d.Ignore())
                 .ForMember(p => p.UserName, d => d.MapFrom(p => p.User.UserName));
 
+            this.CreateMap<EmployeeActivity, ActivityDto>();
+            this.CreateMap<Employee, EmployeeReportDto>();
+
         }
     }
 }

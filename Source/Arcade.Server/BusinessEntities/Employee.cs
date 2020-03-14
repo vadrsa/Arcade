@@ -1,6 +1,7 @@
 ﻿using Common.DataAccess;
 using LinqToDB.Mapping;
 using System;
+using System.Collections.Generic;
 
 namespace BusinessEntities
 {
@@ -16,5 +17,9 @@ namespace BusinessEntities
 
         [Association(ThisKey = nameof(Id), OtherKey = nameof(Id))]
         public User User { get; set; }
+
+
+        [Association(ThisKey = nameof(Id), OtherKey = nameof(EmployeeActivity.EmployeeId))]
+        public IEnumerable<EmployeeActivity> Activities { get; set; }
     }
 }

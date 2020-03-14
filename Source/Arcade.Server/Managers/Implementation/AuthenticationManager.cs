@@ -1,10 +1,9 @@
 ﻿using BusinessEntities;
 using Common.Core;
-using Common.Enums;
 using Common.Faults;
-using Common.ResponseHandling;
 using DataAccess;
 using Facade.Managers;
+using Facade.Repositories;
 using LinqToDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -28,6 +27,8 @@ namespace Managers.Implementation
         private readonly ArcadeContext _context;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private IHttpContextAccessor _httpContextAccessor;
+        private IEmployeeActivityRepository _employeeActivityRepository;
         private readonly IEmployeeManager _employeeManager;
         private readonly IConfiguration _configuration;
 
@@ -35,29 +36,24 @@ namespace Managers.Implementation
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmployeeManager employeeManager,
+            IEmployeeActivityRepository employeeActivityRepository,
+            IHttpContextAccessor httpContextAccessor,
             ArcadeContext context,
             IConfiguration configuration
             )
         {
+            _httpContextAccessor = httpContextAccessor;
+            _employeeActivityRepository = employeeActivityRepository;
             _employeeManager = employeeManager;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _context = context;
         }
-
         public async Task<UserDto> LoginAsync(LoginDto model)
         {
             var appUser = _userManager.Users.SingleOrDefault(r => r.UserName == model.Username);
-            EmployeeDto employee = null;
-            try
-            {
-                employee = await _employeeManager.GetById(appUser.Id);
-            }
-            catch (Exception)
-            {
-
-            }
+            EmployeeDto employee = await GetEmployee(appUser);
 
             if (employee != null && employee.IsTerminated)
                 throw new FaultException(FaultType.InvalidCredentials, "Your account has been suspended");
@@ -66,14 +62,42 @@ namespace Managers.Implementation
 
             if (result.Succeeded)
             {
+                if(employee != null)
+                    await _employeeActivityRepository.InsertAsync(new EmployeeActivity
+                    {
+                        EmployeeId = employee.UserId,
+                        Date = DateTime.UtcNow,
+                        Type = BusinessEntities.ActivityType.Login
+                    });
                 List<string> roles = (await _userManager.GetRolesAsync(appUser)).ToList();
                 return new UserDto { UserName = appUser.UserName, Token = GenerateJwtToken(appUser, roles).ToString(), Roles = roles };
             }
-            throw new FaultException(FaultType.InvalidCredentials) { Descriptor = result};
+            throw new FaultException(FaultType.InvalidCredentials) { Descriptor = result };
+        }
+
+        private async Task<EmployeeDto> GetEmployee(User user)
+        {
+            try
+            {
+                return  await _employeeManager.GetById(user.Id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task LogoutAsync()
         {
+            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            var employee = await GetEmployee(user);
+            if(employee != null)
+                await _employeeActivityRepository.InsertAsync(new EmployeeActivity
+                {
+                    EmployeeId = employee.UserId,
+                    Date = DateTime.UtcNow,
+                    Type = BusinessEntities.ActivityType.Logout
+                });
             await _signInManager.SignOutAsync();
         }
 
@@ -99,6 +123,7 @@ namespace Managers.Implementation
                 }
             }
             await _context.DeleteAsync(user);
+            //await _context.DeleteAsync(user);
         }
 
         public async Task<UserDto> RegisterAsync(RegisterDto model)
@@ -114,7 +139,7 @@ namespace Managers.Implementation
                 return new UserDto { Id = user.Id, UserName = user.UserName, Roles = roles, Token = GenerateJwtToken(user, roles).ToString() };
             }
 
-            throw new FaultException(FaultType.InvalidUserRegisteration) { Descriptor = result.Errors.Select(e => e.Description)};
+            throw new FaultException(FaultType.InvalidUserRegisteration) { Descriptor = result.Errors.Select(e => e.Description) };
         }
 
         public async Task SetRoleAsync(string id, ApplicationRole role)
@@ -129,7 +154,7 @@ namespace Managers.Implementation
                 {
                     // item should be the name of the role
                     var roleRemoveResult = await _userManager.RemoveFromRoleAsync(user, item);
-                    if(!roleRemoveResult.Succeeded)
+                    if (!roleRemoveResult.Succeeded)
                         throw new FaultException(FaultType.BadRequest) { Descriptor = roleRemoveResult.Errors.Select(e => e.Description) };
                 }
             }
@@ -164,5 +189,6 @@ namespace Managers.Implementation
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
     }
 }

@@ -65,11 +65,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityDto.cs" />
     <Compile Include="ApplicationRole.cs" />
     <Compile Include="Attributes\IgnoreValueAttribute.cs" />
     <Compile Include="ComputerDto.cs" />
     <Compile Include="ComputerTypeDto.cs" />
     <Compile Include="EmployeeDto.cs" />
+    <Compile Include="EmployeeReportDto.cs" />
     <Compile Include="Faults\FaultResponse.cs" />
     <Compile Include="Faults\FaultType.cs" />
     <Compile Include="GameDto.cs" />

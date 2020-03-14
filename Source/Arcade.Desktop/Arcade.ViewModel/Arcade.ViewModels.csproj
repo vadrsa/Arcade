@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityViewModel.cs" />
     <Compile Include="ComputerIncomeViewModel.cs" />
     <Compile Include="Configuration\ComputerProfile.cs" />
     <Compile Include="Configuration\ComputerTypeProfile.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Configuration\GamesProfile.cs" />
     <Compile Include="Configuration\SessionProfile.cs" />
     <Compile Include="Configuration\SystemSettingProfile.cs" />
+    <Compile Include="EmployeeReportDataViewModel.cs" />
     <Compile Include="SessionViewModel.cs" />
     <Compile Include="ComputerSessionViewModel.cs" />
     <Compile Include="ComputerViewModel.cs" />

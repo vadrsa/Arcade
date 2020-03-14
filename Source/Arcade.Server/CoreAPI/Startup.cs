@@ -184,6 +184,7 @@ namespace CoreAPI
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<ISessionRepository, SessionRepository>();
             services.AddTransient<ISessionManager, SessionManager>();
+            services.AddTransient<IEmployeeActivityRepository, EmployeeActivityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

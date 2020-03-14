@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="StaffModule.Workitems.DatePicker.Views.DatePickerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:mvvm="clr-namespace:Infrastructure.Mvvm;assembly=Infrastructure.Wpf" 
+             xmlns:controls="clr-namespace:Arcade.CustomControls;assembly=Arcade.CustomControls" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:kernel="clr-namespace:Kernel;assembly=Kernel" 
+             xmlns:infConst="clr-namespace:Infrastructure.Constants;assembly=Infrastructure.Wpf" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StaffModule.Workitems.DatePicker.Views"
+             xmlns:prism="http://prismlibrary.com/"
+            prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             Width="300"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <DatePicker SelectedDate="{Binding Date}" materialDesign:HintAssist.Hint="Pick a date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0">
+            <Button Width="100"  Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding SelectCommand}" Content="Select" />
+            <Button Width="70"  Style="{DynamicResource MaterialDesignToolButton}" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Content="Cancel" />
+        </StackPanel>
+    
+    </Grid>
+</UserControl>

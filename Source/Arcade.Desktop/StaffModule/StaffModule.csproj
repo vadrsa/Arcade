@@ -137,6 +137,17 @@
     <Compile Include="Views\StaffManagerButton.xaml.cs">
       <DependentUpon>StaffManagerButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Workitems\DatePicker\DatePickerWorkitem.cs" />
+    <Compile Include="Workitems\DatePicker\Views\DatePickerView.xaml.cs">
+      <DependentUpon>DatePickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\DatePicker\Views\DatePickerViewModel.cs" />
+    <Compile Include="Workitems\EmployeeReport\EmployeeReportWorkitem.cs" />
+    <Compile Include="Workitems\EmployeeReport\EmployeeReportWorkitemInitializer.cs" />
+    <Compile Include="Workitems\EmployeeReport\Views\EmployeeReportView.xaml.cs">
+      <DependentUpon>EmployeeReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\EmployeeReport\Views\EmployeeReportViewModel.cs" />
     <Compile Include="Workitems\SessionManagerDetails\SessionManagerDetailsWorkitem.cs" />
     <Compile Include="Workitems\SessionManagerDetails\Views\SessionDetailsView.xaml.cs">
       <DependentUpon>SessionDetailsView.xaml</DependentUpon>
@@ -204,6 +215,14 @@
     <Page Include="Views\StaffManagerButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Workitems\DatePicker\Views\DatePickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Workitems\EmployeeReport\Views\EmployeeReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Workitems\SessionManagerDetails\Views\SessionDetailsView.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1,4 +1,5 @@
-﻿using Flurl.Http;
+﻿using Flurl;
+using Flurl.Http;
 using Infrastructure.Api;
 using SharedEntities;
 using System;
@@ -20,6 +21,11 @@ namespace StaffModule.Services
             return await BuildRequest().GetJsonAsync<List<EmployeeDto>>();
         }
 
+        public async Task<EmployeeReportDto> GetReport(string id, DateTime date)
+        {
+            return await BuildRequest($"{id}/report").PostJsonAsync(date).ReceiveJson<EmployeeReportDto>();
+        }
+
         public async Task<EmployeeDto> GetForUploadByID(string id, CancellationToken token = default(CancellationToken))
         {
             return await BuildRequest($"{id}").GetJsonAsync<EmployeeDto>();
@@ -39,6 +45,11 @@ namespace StaffModule.Services
         public async Task Remove(string id)
         {
             await BuildRequest("" + id).DeleteAsync().ConfigureAwait(false);
+        }
+
+        public async Task Terminate(string id)
+        {
+            await BuildRequest("" + id + "/terminate").DeleteAsync().ConfigureAwait(false);
         }
     }
 }

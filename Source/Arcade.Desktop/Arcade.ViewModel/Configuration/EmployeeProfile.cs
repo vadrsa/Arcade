@@ -27,6 +27,10 @@ namespace Arcade.Configuration
                 .ForMember(p => p.Id, o => o.MapFrom(d => d.UserId));
             this.CreateMap<EmployeeUploadViewModel, EmployeeUploadDto>()
                 .ForMember(p => p.UserId, o => o.MapFrom(d => d.Id));
+            this.CreateMap<ActivityDto, ActivityViewModel>();
+            this.CreateMap<EmployeeReportDto, EmployeeReportDataViewModel>()
+                .ForMember(p => p.Id, o => o.MapFrom(d => d.UserId))
+                .ForMember(p => p.WorkedSpan, o => o.Ignore());
 
         }
     }

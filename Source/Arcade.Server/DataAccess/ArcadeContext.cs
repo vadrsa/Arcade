@@ -59,6 +59,7 @@ namespace DataAccess
         public ITable<Payment> Payments => GetTable<Payment>();
         public ITable<Session> Sessions => GetTable<Session>();
         public ITable<QueueNumberStorage> QueueNumberStorage => GetTable<QueueNumberStorage>();
+        public ITable<EmployeeActivity> EmployeeActivity => GetTable<EmployeeActivity>();
         
     }
 }
