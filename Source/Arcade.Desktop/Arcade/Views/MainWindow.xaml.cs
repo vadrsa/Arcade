@@ -17,7 +17,6 @@ namespace Arcade.Views
         {
             InitializeComponent();
             snackbar.MessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(3000));
-            //snackbar.MessageQueue.Enqueue("test");
             MessageQueueContainer.Queue = snackbar.MessageQueue;
             MessageQueueContainer.Queue.IgnoreDuplicate = true;
         }
