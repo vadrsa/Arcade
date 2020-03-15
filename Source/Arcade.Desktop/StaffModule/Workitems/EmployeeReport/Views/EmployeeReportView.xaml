@@ -17,6 +17,7 @@
         <mvvm:BooleanToVisibilityConverter x:Key="visibilityConverter"/>
         <mvvm:InverseBooleanConverter x:Key="inverseBoolean"/>
 
+        <mvvm:DateTimeToDateConverter x:Key="DateTimeToDateConverter" />
         <mvvm:UtcToLocalConverter x:Key="UtcToLocalConverter" />
     </UserControl.Resources>
     <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
@@ -38,7 +39,7 @@
                         <materialDesign:PackIcon Kind="Reload" Height="24" Width="24" />
                     </Button>
                     <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30">
-                        <TextBlock FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding Report.Date}"></TextBlock>
+                        <TextBlock FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding Report.Date, Converter={StaticResource DateTimeToDateConverter}}"></TextBlock>
                     </StackPanel>
                     <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30">
                         <TextBlock FontSize="18" FontWeight="Bold"><Run Text="{Binding Report.FirstName}"></Run> <Run Text="{Binding Report.LastName}"></Run></TextBlock>

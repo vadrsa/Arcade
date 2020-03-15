@@ -151,6 +151,7 @@
     <Compile Include="Mvvm\ObjectVisibilityConverter.cs" />
     <Compile Include="Mvvm\ObjectWidthConverter.cs" />
     <Compile Include="Mvvm\SetterAction.cs" />
+    <Compile Include="Mvvm\DateTimeToDateConverter.cs" />
     <Compile Include="Mvvm\UtcToLocalConverter.cs" />
     <Compile Include="ObjectManagement\IObjectManagementService.cs" />
     <Compile Include="ObjectManagement\IObjectManagerWorkitem.cs" />

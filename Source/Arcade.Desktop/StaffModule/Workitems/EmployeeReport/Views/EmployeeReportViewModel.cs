@@ -30,7 +30,8 @@ namespace StaffModule.Workitems.EmployeeReport.Views
         {
             await LoadCustom(async _ =>
             {
-                Report = Mapper.Map<EmployeeReportDataViewModel>(await new StaffService().GetReport(id, date));
+                Report = Mapper.Map<EmployeeReportDataViewModel>(await new StaffService().GetReport(id, date.Date.ToUniversalTime().Date));
+                Report.Date = date;
             });
         }
 
