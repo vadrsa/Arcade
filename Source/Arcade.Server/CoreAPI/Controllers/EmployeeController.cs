@@ -26,14 +26,14 @@ namespace CoreAPI.Controllers
         }
 
         [HttpPost("{id}/report")]
-        //[Authorize(ApplicationRole.Admin)]
+        [Authorize(ApplicationRole.Admin)]
         public async Task<EmployeeReportDto> GetReport(string id, [FromBody]DateTime date)
         {
             return await ServiceProvider.GetService<IEmployeeManager>().GetReport(id, date);
         }
 
         [HttpGet("{id}")]
-        //[Authorize(ApplicationRole.Admin)]
+        [Authorize(ApplicationRole.Admin)]
         public async Task<EmployeeDto> GetById(string id)
         {
             return await ServiceProvider.GetService<IEmployeeManager>().GetById(id);

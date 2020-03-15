@@ -22,14 +22,12 @@ namespace CoreAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IEnumerable<GameDto>> Get()
         {
             return await ServiceProvider.GetService<IGameManager>().GetAll();
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<GameDetailsDto> GetById(string id)
         {
             return await ServiceProvider.GetService<IGameManager>().GetById(id);
