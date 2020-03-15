@@ -1,0 +1,37 @@
+﻿using Infrastructure.Mvvm;
+using Kernel.Managers;
+using System.Windows;
+
+namespace Infrastructure.Prism
+{
+    public class UIManager : IUIManager
+    {
+        public MessageBoxResult ShowMessageBox(string message, string caption, System.Windows.MessageBoxButton buttons = System.Windows.MessageBoxButton.OK)
+        {
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                return Application.Current.Dispatcher.Invoke(() =>
+                {
+                    return MessageBox.Show(message, caption, buttons);
+
+                });
+            }
+            else
+            {
+                return MessageBox.Show(message, caption, buttons);
+            }
+        }
+
+        public void Error(string message)
+        {
+            MessageQueueContainer.Queue.Enqueue(message);
+            //ShowMessageBox(message, "Error", MessageBoxButton.OK);
+        }
+
+        public bool AskForConfirmation(string message)
+        {
+            return ShowMessageBox(message, "Confirmation Needed", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes;
+        }
+    }
+
+}

@@ -6,6 +6,7 @@ using Infrastructure.Prism;
 using Infrastructure.Utility;
 using Kernel;
 using Kernel.Configuration;
+using Kernel.Managers;
 using Kernel.Prism;
 using Kernel.Workitems;
 using Prism.Ioc;
@@ -56,6 +57,7 @@ namespace Arcade
             var configuration = new MapperConfiguration(cfg => cfg.AddMaps(Assembly.GetAssembly(typeof(GamesProfile))));
             configuration.AssertConfigurationIsValid();
             containerRegistry.RegisterInstance<IMapper>(configuration.CreateMapper());
+            containerRegistry.RegisterInstance<IUIManager>(new UIManager());
         }
 
         protected override void ConfigureViewModelLocator()

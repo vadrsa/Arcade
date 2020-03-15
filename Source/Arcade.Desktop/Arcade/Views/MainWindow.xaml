@@ -11,9 +11,9 @@
         xmlns:const="clr-namespace:Infrastructure.Constants;assembly=Infrastructure.Wpf"
         xmlns:kernel="clr-namespace:Kernel;assembly=Kernel"
         mc:Ignorable="d"
-        Title="VRoom Management System" Height="768" Width="1366">
+        Title="VRoom Management System" Height="768" Width="1366" Icon="VRoom logo.png">
     <Window.Resources>
-        <BitmapImage x:Key="logo" UriSource="Logo.jpg" />
+        <BitmapImage x:Key="logo" UriSource="VRoom logo.png" />
     </Window.Resources>
     <materialDesign:DialogHost Identifier="RootDialog">
         <Grid>
@@ -32,7 +32,7 @@
                 <!--Side Menu Starts Here-->
 
                 <ItemsControl Grid.RowSpan="2" Grid.Column="0" Background="Black" kernel:RegionManager.RegionName="{x:Static const:KnownRegions.MainMenu}">
-                    <Image Source="{StaticResource logo}" Stretch="Fill" Height="133"></Image>
+                    <Image Stretch="Fill" Height="133" Source="{DynamicResource logo}"/>
                 </ItemsControl>
 
                 <ContentControl Grid.RowSpan="2" Grid.Column="1" kernel:RegionManager.RegionName="{x:Static const:KnownRegions.SecondaryMenu}">
@@ -45,8 +45,8 @@
                 
                 <ContentControl Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" kernel:RegionManager.RegionName="{x:Static const:KnownRegions.Content}"/>
 
+                <materialDesign:Snackbar  Grid.RowSpan="2" x:Name="snackbar" Grid.Column="2"  Margin="10" />
             </Grid>
-
         </Grid>
     </materialDesign:DialogHost>
 </Window>

@@ -1,4 +1,5 @@
-﻿using Kernel.Managers;
+﻿using Infrastructure.Mvvm;
+using Kernel.Managers;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.ComponentModel;
@@ -15,6 +16,10 @@ namespace Arcade.Views
         public MainWindow()
         {
             InitializeComponent();
+            snackbar.MessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(3000));
+            //snackbar.MessageQueue.Enqueue("test");
+            MessageQueueContainer.Queue = snackbar.MessageQueue;
+            MessageQueueContainer.Queue.IgnoreDuplicate = true;
         }
 
 
