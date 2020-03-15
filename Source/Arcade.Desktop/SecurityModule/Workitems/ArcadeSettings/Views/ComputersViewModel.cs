@@ -1,12 +1,15 @@
 ﻿using Arcade.ViewModels;
 using Infrastructure.Api;
+using Infrastructure.Mvvm;
 using Infrastructure.ObjectManagement;
+using Prism.Commands;
 using Prism.Ioc;
 using SecurityModule.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SecurityModule.Workitems.ArcadeSettings.Views
 {
@@ -15,6 +18,16 @@ namespace SecurityModule.Workitems.ArcadeSettings.Views
         List<ComputerTypeViewModel> ComputerTypes;
 
         protected override IObjectManagementService<ComputerViewModel, ComputerViewModel, string> ObjectManagementService => ContainerProvider.Resolve<ComputersOMService>();
+
+        private DelegateCommand<string> copyCommand;
+        public DelegateCommand<string> CopyToClipboardCommand =>
+            copyCommand ?? (copyCommand = new DelegateCommand<string>(CopyToClipboard));
+
+        private void CopyToClipboard(string id)
+        {
+            Clipboard.SetText(id);
+            MessageQueueContainer.Queue.Enqueue("Copied to clipboard.");
+        }
 
         protected override async Task Edit(string id)
         {

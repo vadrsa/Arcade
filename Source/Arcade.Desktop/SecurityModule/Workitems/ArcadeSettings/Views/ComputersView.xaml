@@ -47,18 +47,18 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Button Grid.Column="2" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
-                                            Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            Command="{Binding Path=DataContext.CopyToClipboardCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding Id}"
                                         HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                        <materialDesign:PackIcon Kind="Delete" />
+                                        <materialDesign:PackIcon Kind="ContentCopy" />
                                     </Button>
-                                    <Button Grid.Column="2" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                                    <Button Grid.Column="4" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
                                             Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding Id}"
                                         HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                         <StackPanel>
                                             <materialDesign:PackIcon Kind="Restore" Visibility="{Binding IsTerminated, Converter={StaticResource visibilityConverter}}"/>
-                                            <materialDesign:PackIcon Kind="Delete" Visibility="{Binding  IsTerminated, Converter={StaticResource visibilityConverter}, ConverterParameter=True}"/>
+                                            <materialDesign:PackIcon Kind="DeleteEmptyOutline" Visibility="{Binding  IsTerminated, Converter={StaticResource visibilityConverter}, ConverterParameter=True}"/>
                                         </StackPanel>
                                     </Button>
                                     <!--<Button  Grid.Column="4" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
