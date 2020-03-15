@@ -12,8 +12,7 @@
             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              Background="White"
-             MinWidth="600"
-             d:DesignHeight="450" d:DesignWidth="800">
+             MinWidth="600" d:DesignWidth="800">
     <UserControl.Resources>
         <mvvm:BooleanToVisibilityConverter x:Key="visibilityConverter"/>
         <mvvm:InverseBooleanConverter x:Key="inverseBoolean"/>
@@ -26,7 +25,6 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid>
@@ -49,19 +47,21 @@
                     <StackPanel Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30">
                         <TextBlock FontSize="18" FontWeight="Bold" ><Run Text="{Binding Report.WorkedSpan, Mode=OneWay}"></Run> <Run>worked</Run></TextBlock>
                     </StackPanel>
+                    
                 </Grid>
+
+                <Border
+                Visibility="{Binding IsLoading, FallbackValue=Visible, Converter={StaticResource visibilityConverter}}"
+                Background="Black"
+                Opacity="0.8">
+                </Border>
+                <controls:LoadingIndicator  SpeedRatio="1.5" IsActive="{Binding IsLoading, FallbackValue=False}" Mode="Arcs" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                <controls:FaultedPage
+                Visibility="{Binding IsLoadingFaulted, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}" Message="{Binding LoadingErrorMessage}" Command="{Binding ReloadCommand}"/>
+
                 <Button Grid.Row="2"  HorizontalAlignment="Right" Margin="20" Width="150" Style="{DynamicResource MaterialDesignToolButton}"  Command="{Binding CloseCommand}" Content="Close" />
 
             </Grid>
-            <Border
-                Visibility="{Binding IsLoading, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}"
-                Background="Black"
-                Opacity="0.8">
-            </Border>
-            <controls:LoadingIndicator  SpeedRatio="1.5" IsActive="{Binding IsLoading, FallbackValue=False}" Mode="Arcs" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-            <controls:FaultedPage
-                Visibility="{Binding IsLoadingFaulted, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}" Message="{Binding LoadingErrorMessage}" Command="{Binding ReloadCommand}"/>
-
         </Grid>
 
     </ScrollViewer>
