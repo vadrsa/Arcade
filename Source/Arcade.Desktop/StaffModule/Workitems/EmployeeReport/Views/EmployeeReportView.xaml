@@ -52,7 +52,7 @@
                 </Grid>
 
                 <Border
-                Visibility="{Binding IsLoading, FallbackValue=Visible, Converter={StaticResource visibilityConverter}}"
+                Visibility="{Binding IsLoading, FallbackValue=Hidden, Converter={StaticResource visibilityConverter}}"
                 Background="Black"
                 Opacity="0.8">
                 </Border>

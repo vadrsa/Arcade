@@ -14,7 +14,7 @@ namespace Kernel.Workitems.Strategies.Close
         protected override async Task Execute()
         {
             // if not modal
-            if (!(Workitem.IsModal))
+            if (!Workitem.IsModal)
             {
                 await CurrentContextService.FocusWorkitem((IWorkItem)Workitem.Parent);
             }

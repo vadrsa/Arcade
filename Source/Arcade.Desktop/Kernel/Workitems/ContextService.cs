@@ -12,6 +12,7 @@ using System.Windows;
 using Kernel.Managers;
 using Kernel.Configuration;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 
 namespace Kernel.Workitems
 {
@@ -115,7 +116,7 @@ namespace Kernel.Workitems
             {
                 WorkitemBehaviorOptions options = Project.GetOption<WorkitemBehaviorOptions>();
                 if (!await options.Behaviour.OnLaunching(this, new Behaviors.WorkitemLaunchDescriptor(type, parent == null, isModal, parent)))
-                    return null;
+                    return Observable.Empty<WorkitemEventArgs>();
                 
             }
             if (!typeof(IWorkItem).IsAssignableFrom(type))

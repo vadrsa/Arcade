@@ -16,7 +16,14 @@ namespace Infrastructure.ObjectManagement
         public TDetails Details
         {
             get { return _details; }
-            set { Set(ref _details, value, nameof(Details)); }
+            set { 
+                Set(ref _details, value, nameof(Details));
+                OnDetailsChanged();
+            }
+        }
+
+        protected virtual void OnDetailsChanged()
+        {
         }
 
         public bool NeedReload { get; set; }

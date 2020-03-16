@@ -5,6 +5,7 @@ using Kernel;
 using Kernel.Workitems;
 using MaterialDesignThemes.Wpf;
 using Prism.Ioc;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,11 +18,17 @@ namespace Infrastructure.ObjectManagement
 
         private ObjectManagerDetailsInitializer<TDetails> _data;
         private ObjectManagerDetailsViewModel<TDetails> viewModel;
+        protected ObjectManagerDetailsInitializer<TDetails> Data => _data;
         protected ObjectManagerDetailsViewModel<TDetails> ViewModel => viewModel;
         protected abstract IObjectManagementService<TList, TDetails, K> ObjectManagementService { get; }
 
         public ObjectManagerDetailsWorkitem(IContainerExtension container) : base(container)
         {
+        }
+
+        protected virtual Type ViewType
+        {
+            get => typeof(TView);
         }
 
         protected override void RegisterCommands(ICommandContainer container)
@@ -39,7 +46,7 @@ namespace Infrastructure.ObjectManagement
         protected override void RegisterViews(IViewContainer container)
         {
             base.RegisterViews(container);
-            var view = container.Register<TView>(Container.Resolve<TView>(), KnownRegions.Content);
+            var view = container.Register<FrameworkElement>((FrameworkElement)Container.Resolve(ViewType), KnownRegions.Content);
             viewModel = (ObjectManagerDetailsViewModel<TDetails>)view.DataContext;
             viewModel.Details = _data.Details;
             viewModel.IsAdding = _data.IsAdding;

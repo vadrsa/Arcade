@@ -28,7 +28,7 @@ namespace Infrastructure.ObjectManagement
         {
             try
             {
-                return (await CurrentContextService.LaunchModalWorkItem<TDetailsWI>(new ObjectManagerDetailsInitializer<TDetails> { Details = details, IsAdding = isAdding }, this)).Where(w => w.Data is bool).Select(w => (bool)w.Data);
+                return (await CurrentContextService.LaunchModalWorkItem<TDetailsWI>(new ObjectManagerDetailsInitializer<TDetails> { Details = details, IsAdding = isAdding }, this)).Where(w => w != null && w.Data is bool).Select(w => (bool)w.Data);
             }
             catch (Exception e)
             {

@@ -139,7 +139,7 @@ namespace Kernel.Workitems.Strategies.Launch
                     if (exists != null)
                     {
                         await CurrentContextService.FocusWorkitem(exists).ConfigureAwait(false);
-                        return null;
+                        return Observable.Empty<WorkitemEventArgs>();
                     }
                 }
                 var impl = Workitem.GetType().GetInterfaces().FirstOrDefault(x =>
@@ -167,7 +167,7 @@ namespace Kernel.Workitems.Strategies.Launch
                         //Logger.LogWithWorkitemData("Workitem initialization failed", LogLevel.Exception, Workitem, e);
                         // Show error to the UI
                         UIManager.Error("Failed to Initialize Workitem");
-                        return null;
+                        return Observable.Empty<WorkitemEventArgs>();
                     }
                 }
 

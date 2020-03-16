@@ -147,6 +147,10 @@
       <DependentUpon>ConfigurationEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Workitems\SystemSettingEdit\Views\ConfigurationEditViewModel.cs" />
+    <Compile Include="Workitems\SystemSettingEdit\Views\QueueDimensionsEdit.xaml.cs">
+      <DependentUpon>QueueDimensionsEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workitems\SystemSettingEdit\Views\QueueDimensionsEditViewModel.cs" />
     <Compile Include="Workitems\SystemSettings\SystemSettingsWorkitem.cs" />
     <Compile Include="Workitems\SystemSettings\Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
@@ -193,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Workitems\SystemSettingEdit\Views\ConfigurationEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Workitems\SystemSettingEdit\Views\QueueDimensionsEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

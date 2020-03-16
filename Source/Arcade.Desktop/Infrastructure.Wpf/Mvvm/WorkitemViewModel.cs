@@ -186,7 +186,7 @@ namespace Infrastructure.Mvvm
         public override void Dispose()
         {
             base.Dispose();
-
+            CanncellationTokenSource?.Cancel();
             AppSecurityContext.AppPrincipalChanged -= HandleAutheticationStateChanged;
             disposables.ForEach(d => d.Dispose());
         }
